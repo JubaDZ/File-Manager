@@ -3,6 +3,7 @@
 
 Features
 --------
+* `Single file`, there are no images, or css folders.
 * Ajax File Manager ( browse , `Pagination` )
 * Ajax File `uploader`
 * `Rename` and `Delete`  and `Copy` (files & folders)
