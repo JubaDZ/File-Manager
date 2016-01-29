@@ -16,11 +16,12 @@ Features
 config
 -----------
 ```php
-$LoginDialog = true;
-$login_user  = 'admin';
-$login_pass  = 'admin';
+$show_directory = false ; 
+$LoginDialog    = true;
+$login_user     = 'admin';
+$login_pass     = 'admin';
 $Allowed_extensions = array();
-$CanReadExt = array( "css","js","txt","json","xml");
+$CanReadExt         = array( "css","js","txt","json","xml");
 $lang[0] =  'en';
 ```
 ScreenShot
