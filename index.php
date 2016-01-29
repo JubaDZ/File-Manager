@@ -2,13 +2,13 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-$LoginDialog = true;
-$show_directory = false ; // can show directory
-$perpage     = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
-$table_fixed = (isset($_GET['perpage'])) ? 'table-fixed' : '';
-$alert_msg   = (isset($_GET['alert'])) ? $_GET['alert'] : '';
-$login_user  = 'admin';
-$login_pass  = 'admin';
+$LoginDialog      = true;
+$show_file_or_dir = true ; // can show directory
+$perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
+$table_fixed      = (isset($_GET['perpage'])) ? 'table-fixed' : '';
+$alert_msg        = (isset($_GET['alert'])) ? $_GET['alert'] : '';
+$login_user       = 'admin';
+$login_pass       = 'admin';
 
 @session_start();
 if(isset($_GET['logout'])) { session_destroy() ; exit(header('Location: '.$_SERVER['PHP_SELF'])); }
@@ -27,14 +27,20 @@ if(isset($_GET['logout'])) { session_destroy() ; exit(header('Location: '.$_SERV
  }
 
 $Allowed_extensions = array();
-$CanReadExt = array( "css","js","txt","json","xml");
-$Allowed_extensions = array("gif", "jpg", "jpeg", "png","bmp","dir","css","js"); //$lang[16] =folder / Allowed_extensions = in Browse directorie
-$RTL_languages = array('ar','arc','bcc','bqi','ckb','dv','fa','glk','he','lrc','mzn','pnb','ps','sd','ug','ur','yi');
+$CanReadExt         = array();
+//$CanReadExt         = array( "css","js","txt","json","xml");
+//$Allowed_extensions = array("gif", "jpg", "jpeg", "png","bmp","dir","css","js");  // Allowed_extensions = in Browse directorie
 
-$RTL_languages = array_map('strtolower', $RTL_languages);
+$RTL_languages      = array('ar','arc','bcc','bqi','ckb','dv','fa','glk','he','lrc','mzn','pnb','ps','sd','ug','ur','yi');
+
+$RTL_languages      = array_map('strtolower', $RTL_languages);
 $Allowed_extensions = array_map('strtolower', $Allowed_extensions);
-$CanReadExt = array_map('strtolower', $CanReadExt);
+$CanReadExt         = array_map('strtolower', $CanReadExt);
 
+$images_extensions = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg");
+$images_extensions  = array_map('strtolower', $images_extensions);
+$ZipIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4jeXTsQ3CMBAFUEs0ZAiomAGkVPRMAkWQ+xROZ2Sd7/81IsQMGYKBaEgTbIVYdJzkwr5/T9fYmF9XjHEPoFVVlzhna22VHQ4hHEhe+75fGWOMqh5JDmPfe78lGbIAgHYcTgHvTJcFVNVN7h/ANPMPQOLtewDAE8BdROoigOQjxrgD0BQBIlIDaJxz6yJgcQbARUQ2M8At27TWViQDgC71mQB4VT3NbbmoXsXclba51HKLAAAAAElFTkSuQmCC';
+$ImageIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVQ4ja3RMQ6CQBAFUBI7o1Za2VhaGrwA8QDexJYCmikIJITkz9/QUNtxCjuPYOI5jJ1igw0RZAmTTDO7efmz6zhjlogsVTUAIM2Oomj9F1DVwPf9eXMOQEg+RGTWCQCQtnmd7laW5WQIEIrIIsuyraqerYE4jlcAwnqVizXQ+85owK9vrNvrDZDcA3Cb5zYJ3DRNd0VRTAF4Q4BDkiQbkldVfQM49QZI3o0xFcmXMab6tm0C+0dU1SPJvAMQks9WYEh9APFSxanQR2QIAAAAAElFTkSuQmCC';
 $CopyIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4je2TMQoCMRBFdytbQVtbj+ENRFvB1kbYC2w1IARXdmb+YOE1PIKNN/A+sXEhhmRxtfXDNGH+mz8kKYqEAFxUleIC8CCiacrzJlWl1LmZMYBzVVWjlGndTTKzWzB1G4KZeSYiJ+99Gcc+ZqbeVXUTrmZmVwC7j2K/Uuzbtl309vcAGu99KSIHZp4PBojIKryJwYBczx/wI4CIxgDqwYDuiQOonXOTrxMklfvCQTUisox9T0lBs3UzkBOTAAAAAElFTkSuQmCC';
 $CFolderIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4je2SrQ2AQBSD2QBCcOwErAOq4vS1D9RJpmA9FILkOH6CQNCkpkm/VDTLPiHvfUsSEXeXAGY2xnJJM4DiFEASsdw5V5vZElsnaQBQJQEphRByScNjwK73A14ASJrulgEUJPsN0BxcOeUeQPlk+btaAUZIb/PnWjN7AAAAAElFTkSuQmCC';
 $LogoutIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVQ4jWNgGJbAk4GBIQQP9qXUghCaG+DMwMDARa4BzgwMDEYMDAwsSJiRFAM6GRgYYhkYGAKQsBwpBjAxMDCkMDAwcONRQzAMmKCYbAMIAYIGEEpIWZS6YJABAEwKC7pKuYTEAAAAAElFTkSuQmCC';
@@ -92,6 +98,8 @@ $lang[37] =  'الحجم الاقصى';
 $lang[38] =  'غير موجود';
 $lang[39] =  'المجلدات الشجرية';
 $lang[40] =  'نسخ الى';
+$lang[41] =  'فك الضغط';
+$lang[42] =  'معلومات';
 $units = array( 'بايت', 'كيلوبايت', 'ميقابايت', 'جيقابايت', 'تيرابايت', 'بيتابايت', 'اكسابايت', 'زيتابايت', 'يوتابيت');
 
 /*---------------------------english -------------------*/
@@ -137,6 +145,8 @@ $lang[37] =  'Max filesize';
 $lang[38] =  'Not exists';
 $lang[39] =  'Tree View';
 $lang[40] =  'Copy to';
+$lang[41] =  'UnZip file';
+$lang[42] =  'Information';
 
 $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
@@ -155,6 +165,7 @@ function recurse_copy($src,$dst) {
  if (is_file($src) === true)
      return @copy($src,$dst); 
     $dir = opendir($src); 
+	if(!file_exists($dst))
     @mkdir($dst); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
@@ -168,6 +179,22 @@ function recurse_copy($src,$dst) {
     } 
     closedir($dir); 
 } 
+function openZipArchive($file,$extract_path)
+{
+	if(!file_exists($extract_path))
+    @mkdir($extract_path); 
+
+$zip = new ZipArchive;
+$res = $zip->open($file);
+if ($res === TRUE) {
+  $zip->extractTo($extract_path);
+  $zip->close();
+   return true;
+} else {
+  return false;
+}	
+}
+
 
 function unlinkRecursive($dir, $deleteRootToo)
 {
@@ -280,11 +307,12 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
-if(isset($_GET['ReadFile'])) {file_exists_str($_GET['ReadFile']);if(in_array(extension($_GET['ReadFile']), $CanReadExt))	die( _ReadFile($_GET['ReadFile']) ) ; else die($lang[7]);} 
+if(isset($_GET['ReadFile'])) {file_exists_str($_GET['ReadFile']);if(in_array(extension($_GET['ReadFile']), $CanReadExt) || count($CanReadExt)==0 )die( _ReadFile($_GET['ReadFile']) ) ; else die($lang[7]);} 
 if(isset($_GET['copy'])) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
 if(isset($_GET['delete'])) {file_exists_str($_GET['delete']);@unlinkRecursive($_GET['delete'],true);	} 
 if(isset($_GET['newfolder'])) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
 if(isset($_GET['rename'])) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
+if(isset($_GET['unzip'])) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
 if(isset($_GET['listFolderFiles'])) {die(listFolderFiles($directory));} 
 
  if ( isset($_GET['uploadfile']) && isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) ) { 
@@ -294,7 +322,7 @@ $tmp_type = $_FILES["inputFileUpload"]["type"] ;
 $error    = $_FILES["inputFileUpload"]["error"] ;
 $name     = $_FILES["inputFileUpload"]["name"] ;
 $target_file = $directory .'/'.$tmp_name; 
-if(!in_array(extension($tmp_name), $Allowed_extensions))
+if(!in_array(extension($tmp_name), $Allowed_extensions || count($Allowed_extensions)==0 ))
     die(json_encode(array( 'code' => '0','status' => $lang[7] )));
 if(move_uploaded_file($_FILES["inputFileUpload"]["tmp_name"], $target_file))	
     die(json_encode(array( 'code' => '1','status' => $lang[34] ,'url' => $target_file , 'tmp_name' =>  $tmp_name , 'size' => $tmp_size , 'type' => $tmp_type , 'error' => $error , 'name' => $name)));
@@ -393,7 +421,7 @@ $files = array_slice($files, $offset, $perpage);
 
 function showfile($file)
 {
-global $directory,$lang;
+global $directory,$images_extensions,$lang;
 
 if($file=='.' )		
 	return '<a href="?" onclick="getContent('."'dir=".$directory.'/'.$file."'".',0); return false;"><strong>'.$file.'</strong></a>';
@@ -406,6 +434,12 @@ elseif($file=='..' )
 
 elseif(is_dir($directory.'/'.$file) && file_exists($directory.'/'.$file) )	
 	return '<span class="CFolderIcon"></span><a href="?" onclick="getContent('."'dir=".$directory.'/'.$file."'".',0); return false;">'.$file.'</a>';
+	
+elseif (in_array(extension($file), $images_extensions  ))
+	return  '<span class="ImageIcon"></span><a href="'.$directory.'/'.$file.'">'.$file.'</a>' ;
+	
+elseif (in_array(extension($file), array("zip","rar","7z","gzip","tar","wim","xz")  ))
+	return '<span class="ZipIcon"></span><a href="'.$directory.'/'.$file.'">'.$file.'</a>' ;
 	
 else
 	return '<span class="PhpIcon"></span><a href="'.$directory.'/'.$file.'">'.$file.'</a>';
@@ -439,14 +473,14 @@ return @filesize_formatted($directory.'/'.$file);
 
 function action($file)
 {
-global $directory,$page,$show_directory,$lang,$total_files;
+global $directory,$page,$show_file_or_dir,$lang,$total_files,$images_extensions;
 if($file=='Match not found' )
 	return '--'; 
 if( $file =='..')
 	return '--'; 
 
 $html= '<a data-toggle="tooltip" title="'.$lang[1].'" onclick="SetDeleteModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="RemoveIcon"></span></a> ';
-if($show_directory)
+if($show_file_or_dir)
 {
 	if(is_dir($directory.'/'.$file))
 	{
@@ -456,6 +490,10 @@ if($show_directory)
         unset($count);		
 	}
 		
+	elseif (in_array(extension($file), $images_extensions  ))
+	   $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetShowFileModalattr('."'".$directory.'/'.$file."'".'); return false;" href="#"><span class="ImageIcon"></span></a> ' ;
+	elseif (in_array(extension($file), array("zip","rar","7z","gzip","tar","wim","xz")  ))
+	   $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetZipFileModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="ZipIcon"></span></a> ' ;
 	else	
        $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetShowFileModalattr('."'".$directory.'/'.$file."'".'); return false;" href="#"><span class="ShowIcon"></span></a> ' ;
 }
@@ -569,6 +607,8 @@ unset($table_fixed);
         
 		<style>
 
+.ZipIcon {background:url(<?php echo $ZipIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.ImageIcon {background:url(<?php echo $ImageIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
 .CopyIcon {background:url(<?php echo $CopyIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}		
 .CFolderIcon {background:url(<?php echo $CFolderIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
 .OFolderIcon {background:url(<?php echo $OFolderIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
@@ -747,6 +787,35 @@ td{font-size: 12px;}
   </div>
 </div>	
 
+
+
+<!-- Modal Delete -->
+<div id="ZipFile" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo $lang[41]; ?> : <code id="ZipfileName"></code></h4>
+      </div>
+      <div class="modal-body">
+	    <input id="Zipdir" type="hidden" >	
+     <input class="form-control" id="FolderUnzipInput" >
+
+      <div "ZipLoad"></div>
+      </div>
+     <div class="modal-footer">
+	 
+	    <span id="ZipLabelsuccess" class="label label-success"></span> 
+	    <button  type="button" class="btn btn-success" onclick="zipAndContent()"><?php echo $lang[14]; ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
+		 
+	 </div>
+    </div>
+
+  </div>
+</div>	
 
 
 <!-- Modal NewFolder -->
@@ -1038,7 +1107,11 @@ $.fn.extend({
 		   function replace_dir( str ) {
 			  return String( str ).replace( '///', '/' ).replace( '//', '/' ); 
 		   }
-
+		   
+		   function isFile(pathname) {
+			   return pathname.split('/').pop().split('.').length > 1;
+		   }
+		   function isDir(pathname) { return !isFile(pathname); }
 	
 			function getContent(url,type)
 			{
@@ -1117,10 +1190,24 @@ $.fn.extend({
 				var filename = dir.split("&")[0]; 
 				//var filename = filename.split("/")[filename.split("/").length-1]+'/'; 
 				$('#FromFolderDir').val(dir);
-				$('#ToFolderInput').val(filename);
+				$('#ToFolderInput').val(filename); //filename.slice( 0, filename.lastIndexOf("/"))+'/'
 				$('#ShowFile').modal('hide');	
 				$('#CopyFolder').modal('show');		
 				$( "#ToFolderInput" ).focus();				
+			 };
+			 
+			 function SetZipFileModalattr(dir)
+			 {
+		
+				dir = replace_dir(dir); 
+				//var filename = ; 			
+				$('#Zipdir').val(dir);
+				var filename = dir.split("&")[0]; 
+                $('#ZipfileName').html(SplitFileName(dir.split("&")[0],"/"));
+				$('#FolderUnzipInput').val(filename.slice( 0, filename.lastIndexOf("/"))+'/');
+				$('#ShowFile').modal('hide');	
+				$('#ZipFile').modal('show');		
+				$( "#FolderUnzipInput" ).focus();				
 			 };
 			 
 			 
@@ -1162,8 +1249,10 @@ $.fn.extend({
 				$("#listFolderFiles").html('');
                 $("#HrefBrowse").html('<?php echo $lang[3];?>');
 				$("#HrefTree").html('');
-				var FileTypes = [ <?php echo "'".implode("','",$CanReadExt)."'" ; ?>]; 
-				$("#Result").html('<center><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
+				var FileTypes = [ <?php if(count($CanReadExt)!=0) echo "'".implode("','",$CanReadExt)."'" ; ?>]; 
+				var ImgTypes = [ <?php if(count($images_extensions)!=0) echo "'".implode("','",$images_extensions)."'" ; ?>]; 
+				
+				$("#Result").html('<center><br><br><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
 	            $('#filenameInput').val(filename);$('#filenameDir').val(dir);$('#imgUrl').html(filename);
 				$('#ShowFile').modal('show');	
 				
@@ -1182,15 +1271,22 @@ $.fn.extend({
 		  
 					return;
 			};
-				if( $.inArray(getExt(filename), FileTypes  )!==-1) {
+			
+			    if( $.inArray(getExt(filename), ImgTypes  )!==-1)
+				{
+					$("#Result").html('<center><br><img src="'+dir+'" class="img-rounded img-responsive" alt=""></center>'); 
+					return;
+				};
+					
+					
+				if( $.inArray(getExt(filename), FileTypes  )!==-1 || FileTypes.length ==0 ) {
 				
 					$.get("?ReadFile="+dir, function(result){ 
                      $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ;">'+escapeTags(result)+'</textarea>'); 
 					});	
-
-				}
-				else
-					$("#Result").html('<center><br><img src="'+dir+'" class="img-rounded img-responsive" alt=""></center>'); 
+					return;
+				};
+				
 					
 						
 			 };
@@ -1244,6 +1340,25 @@ $.fn.extend({
 		       $('#CopyLabelsuccess').html('');
 			   $('#ToFolderInput').val('');
 			   
+	         });	
+             };
+			 
+			 
+			  	 function zipAndContent() 
+			 { 
+
+			  $("#ZipLoad").html('<center><br><br><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
+			   $("#FolderUnzipInput").attr("disabled", "disabled");
+			   $('#ZipLabelsuccess').html('<?php echo $lang[17]; ?>');		
+			   dir = replace_dir($('#Zipdir').val()); 
+			   $.getJSON("?unzip="+dir+"&table&to="+$('#FolderUnzipInput').val(), function(data){
+	           $("#content").html(data.table);
+			   $('#alert').html(data.alert);		
+	           $('#ZipFile').modal('hide');
+               $("#FolderUnzipInput").removeAttr("disabled");
+		       $('#ZipLabelsuccess').html('');
+			   $('#FolderUnzipInput').val('');
+			   $("#ZipLoad").html('');
 	         });	
   
              };
