@@ -6,6 +6,7 @@ Features
 * Ajax File Manager ( browse , `Pagination` )
 * Ajax File `uploader`
 * `Rename` and `Delete`  and `Copy` (files & folders)
+* `Unzip` archive
 * `Create` folder
 * Tree view
 * Session `login`
@@ -16,10 +17,11 @@ Features
 config
 -----------
 ```php
-$show_directory = false ; 
-$LoginDialog    = true;
-$login_user     = 'admin';
-$login_pass     = 'admin';
+$LoginDialog      = true;
+$show_file_or_dir = true ; 
+$perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
+$login_user       = 'admin';
+$login_pass       = 'admin';
 $Allowed_extensions = array();
 $CanReadExt         = array( "css","js","txt","json","xml");
 $lang[0] =  'en';
