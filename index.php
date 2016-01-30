@@ -932,7 +932,7 @@ td{font-size: 12px;}
       </div>
       <div class="modal-body">
 	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$_extensions[0]).' }</code> <br> 
-	  '.$lang[37].' : <code>'.$_maxFileSize.'</code>'; ?> <br>
+	  '.$lang[37].' : <code id="maxFileSize">'.$_maxFileSize.'</code>'; ?> <br>
 	  <?php echo $lang[6] ?> : <code><span id="UploadFileSize"></span></code></p>
 	<form  id="FileUploadForm" enctype="multipart/form-data" method="post">
 	    <input id="UploadFileDir" type="hidden" >	
@@ -1146,7 +1146,7 @@ $.fn.extend({
 							{
 								$('#FileUploadLabelsuccess').html('<?php echo $lang[33].' : '.$lang[37]?>  '+formatFileSize(maxFileSize) );
 								$("#FileUploadBtn").attr("disabled", "disabled");
-							}
+							} else $('#FileUploadLabelsuccess').html('');
 							
 							
 						}
@@ -1276,6 +1276,8 @@ $.fn.extend({
 				$('#UploadFileDir').val(dir);
 				$('#inputFileUpload').val('');
 				$('#ShowFile').modal('hide');	
+				$('#maxFileSize').html( formatFileSize(maxFileSize) );	
+				
 				$('#UploadFile').modal('show');				
 			 };
 			 
