@@ -6,7 +6,7 @@ date_default_timezone_set('UTC');
 $LoginDialog      = true;
 $login_user       = 'admin';
 $login_pass       = 'admin';
-
+$charset          = 'utf-8';
 $show_file_or_dir = true ; // can show directory
 $perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
 $table_fixed      = (isset($_GET['perpage'])) ? 'table-fixed' : '';
@@ -299,7 +299,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED
 
 if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['Remove']) || isset($_GET['read']) || isset($_GET['newfolder']) )  )
 {
-  header('Content-Type: application/json');
+  header("Content-type: application/json; charset=".$charset);
   die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
 }
 
@@ -310,7 +310,7 @@ if(!Login() && $LoginDialog)
 <html>
 <head>
 <title>'.$lang[22].'</title>
-<meta charset="utf-8">
+<meta charset="'.$charset.'">
 <link href="'.$icon[12].'" rel="icon" type="image/x-icon" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -326,7 +326,7 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
  <div class="col-sm-4 col-sm-offset-4" style="margin-top:50px;">
 		<div class="well" style="background-color: #FFF;">
       <legend>'.$lang[22].'</legend>
-    <form accept-charset="UTF-8" action="" method="post">
+    <form accept-charset="'.$charset.'" action="" method="post">
 		            <div class="input-group" style="margin-top:10px;">
                         <span class="input-group-addon"><i class="UserIcon"></i></span>
                         <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
@@ -352,14 +352,18 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
-if(isset($_GET['read']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['read']);if(in_array(extension($_GET['read']), $_extensions[1]) || count($_extensions[1])==0 )die( _read($_GET['read']) ) ; else die($lang[7]);} 
+
 if(isset($_GET['copy']) && AJAX_request() ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
 if(isset($_GET['Remove']) && AJAX_request() ) {file_exists_str($_GET['Remove']);@unlinkRecursive($_GET['Remove'],true);	} 
 if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
 if(isset($_GET['rename']) && AJAX_request() ) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
 if(isset($_GET['unzip']) && AJAX_request() ) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
 if(isset($_GET['listFolderFiles'])  && AJAX_request() ) {die(listFolderFiles($directory));} 
-
+if(isset($_GET['read']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['read']);if(in_array(extension($_GET['read']), $_extensions[1]) || count($_extensions[1])==0 )
+	{   header('Content-type: text/html; charset='.$charset);
+		die( _read($_GET['read']) ) ; 
+	}   else die($lang[7]);} 
+	
  if ( isset($_GET['uploadfile']) ) { 
  
  $response = array();
@@ -391,7 +395,7 @@ else
  } else $response[] = array( 'code' => '0','status' => $lang[7] );  
 } else $response[] = array( 'code' => '0','status' => $lang[38] );  
 }
-  header('Content-Type: application/json');
+  header("Content-type: application/json; charset=".$charset);
   die(json_encode($response));										
  
 }; //$alert_msg=$lang[38];
@@ -415,6 +419,16 @@ if(!function_exists('scandir')) {
        }
    }
 };
+
+
+function folderSize ($dir)
+{
+    $size = 0;
+    foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each) {
+        $size += is_file($each) ? filesize($each) : folderSize($each);
+    }
+    return $size;
+}
 
 function FilterScanDir($directory)
 {
@@ -646,7 +660,7 @@ if($alert_msg!='')
 	$alert_msg = alert($alert_msg);
   $response = array( 'table' => $html , 'total' => $total_pages , 'page' => $page , 'dir' => $directory , 'dirHtml' => GetOldirectory() ,'alert' => $alert_msg);
   unset($html); 
-  header('Content-Type: application/json');
+  header("Content-type: application/json; charset=".$charset);
   die(json_encode($response));
   
 }
@@ -668,7 +682,7 @@ unset($alert_msg);
 <!DOCTYPE html>
 <html lang="en-US">
     <head>	
-	    <meta charset="utf-8">
+	    <meta charset="<?php echo $charset ?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <?php echo css();?>  
@@ -1277,7 +1291,7 @@ $.fn.extend({
 				$('#inputFileUpload').val('');
 				$('#ShowFile').modal('hide');	
 				$('#maxFileSize').html( formatFileSize(maxFileSize) );	
-				
+				$('#FileUploadLabelsuccess').html('');
 				$('#UploadFile').modal('show');				
 			 };
 			 
@@ -1482,7 +1496,9 @@ $.fn.extend({
 	unset($login_pass);
 	unset($is_rtl);
 	unset($units);
-    unset($_SERVER); unset($_SESSION);unset($_COOKIE);unset($_GET);
+	unset($charset);
+	unset($_maxFileSize);
+    unset($_SERVER); unset($_SESSION);unset($_COOKIE);unset($_GET);  unset($_POST);unset($_FILES);unset($_ENV); unset($_REQUEST); 
 	/*
 	echo  memory_get_usage();
 	$arr = get_defined_vars();
