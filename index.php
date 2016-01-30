@@ -40,6 +40,7 @@ $RTL_languages  = array_map('strtolower', $RTL_languages);
 $_extensions[0] = array_map('strtolower', $_extensions[0]);
 $_extensions[1] = array_map('strtolower', $_extensions[1]);
 
+$_maxFileSize   = return_bytes(ini_get('upload_max_filesize'));
 $_extensions[2] = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg"); //images extensions
 $_extensions[2] = array_map('strtolower', $_extensions[2]);
 $icon[0]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4jeXTsQ3CMBAFUEs0ZAiomAGkVPRMAkWQ+xROZ2Sd7/81IsQMGYKBaEgTbIVYdJzkwr5/T9fYmF9XjHEPoFVVlzhna22VHQ4hHEhe+75fGWOMqh5JDmPfe78lGbIAgHYcTgHvTJcFVNVN7h/ANPMPQOLtewDAE8BdROoigOQjxrgD0BQBIlIDaJxz6yJgcQbARUQ2M8At27TWViQDgC71mQB4VT3NbbmoXsXclba51HKLAAAAAElFTkSuQmCC';
@@ -227,6 +228,19 @@ function unlinkRecursive($dir, $RemoveRootToo)
     return;
 }
 
+
+
+function return_bytes ($size_str)
+{
+    switch (substr ($size_str, -1))
+    {
+        case 'M': case 'm': return (int)$size_str * 1048576;
+        case 'K': case 'k': return (int)$size_str * 1024;
+        case 'G': case 'g': return (int)$size_str * 1073741824;
+        default: return $size_str;
+    }
+}
+
 function text_position($position=0)
 {
 global $is_rtl;
@@ -369,7 +383,7 @@ if(move_uploaded_file($_FILES["inputFileUpload"]["tmp_name"][$n], $target_file))
     $response[] =array( 'code' => '1','status' => $lang[34] ,'url' => $target_file , 'tmp_name' =>  $tmp_name , 'size' => $tmp_size , 'type' => $tmp_type , 'error' => $error , 'name' => $name_);
 elseif($error!=0)
     $response[] =array( 'code' => '0','status' => $lang[33].'_'.$error );	
-elseif($tmp_size>ini_get('upload_max_filesize'))
+elseif($tmp_size>$_maxFileSize)
     $response[] =array( 'code' => '0','status' => $lang[37] );		
 else
 	$response[] =array( 'code' => '0','status' => $lang[33] );	
@@ -917,7 +931,9 @@ td{font-size: 12px;}
 		
       </div>
       <div class="modal-body">
-	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$_extensions[0]).' }</code> , '.$lang[37].' : <code>'.ini_get('upload_max_filesize').'</code>'; ?></p>
+	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$_extensions[0]).' }</code> <br> 
+	  '.$lang[37].' : <code>'.$_maxFileSize.'</code>'; ?> <br>
+	  <?php echo $lang[6] ?> : <code><span id="UploadFileSize"></span></code></p>
 	<form  id="FileUploadForm" enctype="multipart/form-data" method="post">
 	    <input id="UploadFileDir" type="hidden" >	
 
@@ -925,10 +941,11 @@ td{font-size: 12px;}
                 <span class="input-group-btn">
                     <span class="btn btn-default btn-file">
                          <?php echo $lang[32]; ?> <input name="inputFileUpload[]" type="file" multiple >
-                    </span>
+                    </span> 
                 </span>
                 <input type="text" class="form-control" readonly id="inputFileUpload">
             </div>	
+			
       </div>
      <div class="modal-footer">
 	 
@@ -1007,6 +1024,10 @@ td{font-size: 12px;}
  *	Revised code by Leo "LeoV117" Myers
  *
  */
+ var FileTypes = [ <?php if(count($_extensions[1])!=0) echo "'".implode("','",$_extensions[1])."'" ; ?>]; 
+ var ImgTypes = [ <?php if(count($_extensions[2])!=0) echo "'".implode("','",$_extensions[2])."'" ; ?>]; 
+ var units = [<?php if(count($units)!=0) echo "'".implode("','",$units)."'" ; ?>];
+ var maxFileSize = parseInt('<?php echo $_maxFileSize ?>');
 $.fn.extend({
 	treeview:	function() {
 		return this.each(function() {
@@ -1081,7 +1102,12 @@ $.fn.extend({
         });
     }));
 
-
+	function formatFileSize(bytes) {
+				
+				for(var pos = 0;bytes >= 1000; pos++,bytes /= 1024);
+				var d = Math.round(bytes*10);
+				return pos ? [parseInt(d/10),".",d%10," ",units[pos]].join('') : bytes + units[0];
+			}
 
 
 		    var LoadingHtml='<div class="container_01"><center><span class="Loading"></span><br><br><?php echo $lang[35]?></center></div>';
@@ -1092,16 +1118,40 @@ $.fn.extend({
 						numFiles = input.get(0).files ? input.get(0).files.length : 1,
 						label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 						input.trigger('fileselect', [numFiles, label]);
+						var Tsize=0;
+						var Tlabel='';
+						for (i = 0; i < numFiles; i++) {
+                             Tsize  = Tsize+ this.files[i].size;
+							 Tlabel = Tlabel+','+this.files[i].name;
+							 }
+							// alert(Tlabel);
+
+						$("#UploadFileSize").html(formatFileSize(Tsize));	 
 						
 						if(numFiles==0)		
 							$("#FileUploadBtn").attr("disabled", "disabled");
 						else
 							$("#FileUploadBtn").removeAttr("disabled");
 						
-						if(numFiles>1)
-						$('#inputFileUpload').val('<?php echo $lang[10];?> '+numFiles);
+						
+						
+						if(numFiles>1)				
+						  $('#inputFileUpload').val('<?php echo $lang[10];?> '+numFiles);	
 						else
-						$('#inputFileUpload').val(label);
+						{
+							
+							$('#inputFileUpload').val(label);	
+							
+							if(Tsize>maxFileSize)
+							{
+								$('#FileUploadLabelsuccess').html('<?php echo $lang[33].' : '.$lang[37]?>  '+formatFileSize(maxFileSize) );
+								$("#FileUploadBtn").attr("disabled", "disabled");
+							}
+							
+							
+						}
+						  
+						
 						
 						}); 	
 						
@@ -1296,9 +1346,7 @@ $.fn.extend({
 				$("#listFolderFiles").html('');
                 $("#HrefBrowse").html('<?php echo $lang[3];?>');
 				$("#HrefTree").html('');
-				var FileTypes = [ <?php if(count($_extensions[1])!=0) echo "'".implode("','",$_extensions[1])."'" ; ?>]; 
-				var ImgTypes = [ <?php if(count($_extensions[2])!=0) echo "'".implode("','",$_extensions[2])."'" ; ?>]; 
-				
+			
 				$("#Result").html('<center><br><br><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
 	            $('#filenameInput').val(filename);$('#filenameDir').val(dir);$('#imgUrl').html(filename);
 				$('#ShowFile').modal('show');	
