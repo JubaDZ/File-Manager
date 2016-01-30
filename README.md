@@ -5,7 +5,7 @@ Features
 --------
 * `Single file`, there are no images, or css folders.
 * Ajax File Manager ( browse , `Pagination` )
-* Ajax File `uploader`
+* Ajax Milti File `uploader`
 * `Rename` and `Delete`  and `Copy` (files & folders)
 * `Unzip` archive
 * `Create` folder
@@ -14,6 +14,7 @@ Features
 * `Preview` files and images
 * Multi-Languages
 * `Bootstrap` framework
+* Free `memory` allocated
 
 config
 -----------
@@ -23,8 +24,8 @@ $show_file_or_dir = true ;
 $perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
 $login_user       = 'admin';
 $login_pass       = 'admin';
-$Allowed_extensions = array();
-$CanReadExt         = array( "css","js","txt","json","xml");
+$_extensions[0]   = array(); //Allowed extensions (upload & browse)
+$_extensions[1]   = array( "css","js","txt","json","xml"); //read _extensions
 $lang[0] =  'en';
 ```
 ScreenShot

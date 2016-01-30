@@ -26,35 +26,35 @@ if(isset($_GET['logout'])) { session_destroy() ; exit(header('Location: '.$_SERV
 		
  }
 
-$Allowed_extensions = array();
-$CanReadExt         = array();
-//$CanReadExt         = array( "css","js","txt","json","xml");
-//$Allowed_extensions = array("gif", "jpg", "jpeg", "png","bmp","dir","css","js");  // Allowed_extensions = in Browse directorie
+$_extensions[0]  = array();
+$_extensions[1]  = array();
+//$_extensions[1] = array( "css","js","txt","json","xml"); // can read _extensions
+//$_extensions[0] = array("gif", "jpg", "jpeg", "png","bmp","dir","css","js");  // Allowed_extensions = in Browse directorie
 
-$RTL_languages      = array('ar','arc','bcc','bqi','ckb','dv','fa','glk','he','lrc','mzn','pnb','ps','sd','ug','ur','yi');
+$RTL_languages  = array('ar','arc','bcc','bqi','ckb','dv','fa','glk','he','lrc','mzn','pnb','ps','sd','ug','ur','yi');
 
-$RTL_languages      = array_map('strtolower', $RTL_languages);
-$Allowed_extensions = array_map('strtolower', $Allowed_extensions);
-$CanReadExt         = array_map('strtolower', $CanReadExt);
+$RTL_languages  = array_map('strtolower', $RTL_languages);
+$_extensions[0] = array_map('strtolower', $_extensions[0]);
+$_extensions[1] = array_map('strtolower', $_extensions[1]);
 
-$images_extensions  = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg");
-$images_extensions  = array_map('strtolower', $images_extensions);
-$ZipIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4jeXTsQ3CMBAFUEs0ZAiomAGkVPRMAkWQ+xROZ2Sd7/81IsQMGYKBaEgTbIVYdJzkwr5/T9fYmF9XjHEPoFVVlzhna22VHQ4hHEhe+75fGWOMqh5JDmPfe78lGbIAgHYcTgHvTJcFVNVN7h/ANPMPQOLtewDAE8BdROoigOQjxrgD0BQBIlIDaJxz6yJgcQbARUQ2M8At27TWViQDgC71mQB4VT3NbbmoXsXclba51HKLAAAAAElFTkSuQmCC';
-$ImageIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVQ4ja3RMQ6CQBAFUBI7o1Za2VhaGrwA8QDexJYCmikIJITkz9/QUNtxCjuPYOI5jJ1igw0RZAmTTDO7efmz6zhjlogsVTUAIM2Oomj9F1DVwPf9eXMOQEg+RGTWCQCQtnmd7laW5WQIEIrIIsuyraqerYE4jlcAwnqVizXQ+85owK9vrNvrDZDcA3Cb5zYJ3DRNd0VRTAF4Q4BDkiQbkldVfQM49QZI3o0xFcmXMab6tm0C+0dU1SPJvAMQks9WYEh9APFSxanQR2QIAAAAAElFTkSuQmCC';
-$CopyIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4je2TMQoCMRBFdytbQVtbj+ENRFvB1kbYC2w1IARXdmb+YOE1PIKNN/A+sXEhhmRxtfXDNGH+mz8kKYqEAFxUleIC8CCiacrzJlWl1LmZMYBzVVWjlGndTTKzWzB1G4KZeSYiJ+99Gcc+ZqbeVXUTrmZmVwC7j2K/Uuzbtl309vcAGu99KSIHZp4PBojIKryJwYBczx/wI4CIxgDqwYDuiQOonXOTrxMklfvCQTUisox9T0lBs3UzkBOTAAAAAElFTkSuQmCC';
-$CFolderIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4je2SrQ2AQBSD2QBCcOwErAOq4vS1D9RJpmA9FILkOH6CQNCkpkm/VDTLPiHvfUsSEXeXAGY2xnJJM4DiFEASsdw5V5vZElsnaQBQJQEphRByScNjwK73A14ASJrulgEUJPsN0BxcOeUeQPlk+btaAUZIb/PnWjN7AAAAAElFTkSuQmCC';
-$LogoutIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVQ4jWNgGJbAk4GBIQQP9qXUghCaG+DMwMDARa4BzgwMDEYMDAwsSJiRFAM6GRgYYhkYGAKQsBwpBjAxMDCkMDAwcONRQzAMmKCYbAMIAYIGEEpIWZS6YJABAEwKC7pKuYTEAAAAAElFTkSuQmCC';
-$RemoveIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAd0lEQVQ4jWNgoBXo6+vz7+/vb+jv72+YMGFCVUNDgwhJBkyYMGEyjN3Q0MA3YcKEKoKaYDb29/c3TJw48QAevgNeQwhZQtAVxNCjBgx7AzqhtAM6nZuby97f319NyID5fX19XcjJGJqhGidOnHi1q6tLFa8BpAIAcUCizUwVOu0AAAAASUVORK5CYII=';
-$RenameIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/ElEQVQ4ja2TPUpDURCFB2wsopVdNuAWYproArKGkM6U0TxIqikeaMi775xTZAXp3nICwdrOBbgAm/sgvN8oDgxc7sz55jCXa/Yf4e53JDcAvJppmg57ASQ37j6o3gNwSd/VWpIkN7XGJjAAj+4+iqK4MjPL81wAnOT7JYC1u99mWXZP8kByBWAba1t3v+4EVHZzBDACMJMUJKW9Ds7qSwCjeH4CsLxoB6U4hPBgZhZCeKyJuwBx8vhM/No2pQYg+VKKAUwkndpc1gAkF+UzAZjE7Te6bARI+gIwl7QjuWpz2QmQ9Angua2nE/DrHpJTkm9Nn6lMkvu+IX+KH1+Xuy051gU6AAAAAElFTkSuQmCC';
-$Loading='data:image/gif;base64,R0lGODlhHwAfANUAAP///5qamiYmJuTk5Ly8vMzMzKqqqrCwsKKioujo6NTU1Pb29qioqKCgoK6urtLS0tzc3NjY2Li4uObm5nBwcMbGxmhoaEZGRkhISDIyMvj4+Pr6+lBQUDY2NsTExFZWVpKSkgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAKAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAHwAfAAAG/0CAcEhMPAgOBKDDoQQKxKh0CJEErleAYLu1HDRT6YCALWu5XEolPIwYymY0GmNgAxrwuJybCUcaAHlYZ3sCdxFRA28BgVgHBQMLAAkeIB9ojQYDRGSDAQwKYRsIF4ZlBFR5AJt2a3kQQlZlDBN2QxMMcBKTeaG2Qwp5RnAHv1EHcEdwUMZDBXBIcKzNq3BJcJLUAAtwStrNCNjf3GUIDtLfA9adWMzUz6cPxN/IZQ8JvdTBcAkAsli0jOHSJQSCqmlhNr0awo7RJ19TFORqdAXVEEVZyjyKtG1AgXoZA2iK8oeiKkFZGiCaggelSTiA2LhxidLASjZjBL2siNBOFQ84LyXA+mYEiRJzBO7ZCQIAIfkEAQoAIQAsEAAAAA8ADwAABldAhIPwSISOyGRguZRAAEkkc0oYREPTqSESzU4bXe8ylDEgF4PCYRoSCDCVKEDBCLTdAormasXjD1chFRd+AhaBIQiFAgWBGx+FdoEghRSIHoUciAmFHUEAIfkEAQoAIQAsFgAFAAkAFQAABlnAkDDUiAyHgYBhcEwmCQCh0wkJTRjTgESoyAYSIcAh+xAWsgThIOsQLrKIo1yYENjtHaHnbucIQXwCFCEbH4EBIQiBAgUVF4EWQosHQ3wUGkd2GBVzGQZDQQAh+QQBCgAhACwQABAADwAPAAAGWcCQcChcBI5HBJE4QB4dy2HBGSBEQ4AD9XFVUAOJ6IRBlUQroS+EuEFcBGkkARBKeEAfgR5+NAyEe4F6IQ0RQ4KBGUuIehgGi4gUaJB7FgcaVx0cFAEFV0NBACH5BAEKACEALAUAFgAVAAkAAAZUwJAwVBkajYOjUHBBbJQhgIIROAqugg/IkwgtBoVDYFxdYs+CEHk9DmXQZzWb3DBg4Ff53BAhUvB6awRJQhoHFmiBARIQAFAFARQcHSEIDgQPXUZBACH5BAEKACEALAAAEAAPAA8AAAZZwI5gOEyEjsgjhzj0JJMUpgD0RAakn001VJAKENuQRXqpbA/e0KCqiRJDAYYC8KxghvCA/lAYLJAGGXl6hHpPDYWJTxEGiYRVAwSOAVsAEBKKYSEJDwQOCEEAIfkEAQoAIQAsAAAFAAkAFQAABlnAkNCQERpDFYxAcNRQlkvjAQoVWqiCS6WAFSBCAexnE3pSQUIO1iPsYBPHuBARqNcXQoe9PhAS9gEFQg+ABwAhCYABCkISgAwTIRCKQgB/dkcDBnVyEQ1HQQAh+QQBCgAhACwAAAAADwAPAAAGWMCQcEgsBCicDnGoOVgEUOgyVKFEr0sD5oolZrjdUKQRAkeFA0MgUI5+QJ5ECEBYr8sXxIYIsdupUxJ+AQwTUwmDAQpTIQ+DBwCMdX4FjCEOgwOWCIMLlkEAOw==';
-$UserIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVQ4jbXSPUtDMQCF4edKkRaHDv0YBHGXDipIpVC4BVel6C9QkNqpCBZEHHRo6VAQ/cUOjXKVYHMLHsjyJudNSMI/poIjnGC7bPkUb7jEOZbIU8sNLJD94q/YTRHcYj/Cm7hPEbxEdi+eIkmwydx3pqhHeBXPKYIDjCP8Gsfryhn2cIcRdlDDDSZWrxC9nwwPmOMqsA4e8YTDwC4wC2u3ioKu1adJzRC9IsgxKCHo46wI2vgIknzNGOA9dH6klVD+Gq0Sp/07n5Y9F3VkGsILAAAAAElFTkSuQmCC';
-$OFolderIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4jWNgGBRA09I3QMvWr03Lxq8BGWvb+vVrWPlYEjRAy8avAYcUo4aN70QGBgZGcg1g0LDysdSy8atHuMy3XdPSNwCrAYpWXvJa1r6N6F7B9JrvZjUzH30MA7SsfRsZGBhYCHmZgYGBQcvWrw3TADxewTAAWe2oAQwMWjZ+9RQa4JOoZeNXrGXrv0fbyjeBENay9svQsvYtQTFR0dxZXMPCQ4EYLGvoKkWsSwkCAJwBVLOXJRgIAAAAAElFTkSuQmCC';
-$UploadIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA9UlEQVQ4jc2QTUoDQRCFs0jEn7WuFQ8QFx6gNwYXunP0Cq6EgVkI2XQgzIRuut4rG8HaCV7AI7oxYRwSMhACFjRNP977qroGg39XZjbKORcApiSfiqI46B2u6/pUVd9CCFfOuWFKaUzyPcZ41gugqnMzO25rVVWdkPwiOSO5EJHHjQCSsx5NnlNK43Xhl5xzsQ1QluWRqloI4XIlisiE5F3XLCK3qvrtvT9s6865IUlZCQCmZjZaE35V1U8AH13In++SvBGR+7YBwMPv7ZumOReR640TLHegqnMAvnVc5+0BeJKIMV5s29dyEt/LuE+A2wmw9/oBfgaBG4x+og4AAAAASUVORK5CYII=';
-$PhpIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVQ4jWNgoBZQMvdR1bL2n6Rl49eADWtb+U3QtvbfyKCiwo7VAA1rv3gNCw8FXBYo67mJadn6Tday9p+E1RBtK98EfAYwMDAwaNr4BGrb+vVrWfnFkGUAAwMDg4aFh4K2lW/CqAGjBmA1QMPGN1LF1F2bkAGqFt6aGja+kRgSxsbGXNo2fs24MhMc2/q1CamY8xGyiGgAAMh+SQebq1EfAAAAAElFTkSuQmCC';
-$ExplorIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA00lEQVQ4jd3PPQrCQBAF4BWE3EFsvMk2Vl7A1t5tLESwscywsO+91ILXsbJPKVjqDYTYpBCJiX+Vr5xhvplx7v9iZgMAO0kXkldJh5TS9OVhSUdJ0cyGIYSM5BhAKWnVCdSbYxNM8hxjHLUCki5mNmzqkdySnLcCJK8hhOxJLwew7rrgQHL8WK+qqidpD2DSCqSUpgBKMxs8DC8lnbz3/VagvmJF8lz/nEvaSzoVRVEB2HQCzjkXYxyRnANYA5h47/sANm8hTblDFt8gC0mzj4Gf5wYc04KjAuZmyQAAAABJRU5ErkJggg==';
-$PassIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAwklEQVQ4jb2QPQrCQBCFFyvxBtYKuYOVnZ3nCF7BZpsUG9id96bLDTyDlaWnEGzt0xliJYSwJOvvg9cMzPfejDG/UlEUc5K5iOwBbIwxk+RlAFsAtaq2TwM4VlU1S0oGUJM8O+cya+0UwI5kQ9KPAkjmqto657JeqwPJ2yhARKyqtqnz7wIABJJN93l9k7yGEJZRQGyZ5ElEbNfe+1UUMJTctYjYZECsgYis/wd46YSPnxhCKAHch9IBXMqyXEQB7+gBtIEmVWp3raAAAAAASUVORK5CYII=';
-$TreeIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SMU7DQBBFp+UacACKXMCNJYLCCVxzHDf2CfAqVdaz402NiJK0WRcUuUBAlAEbClJ8CuLIctaS63xpNdJo9Pft7Cc6Kk1TkEeFtcIiyI2BZsbrdqt9c0REI1+TRdBo4xwAIDfm3KSPgEXw9v4BAFiu1tg4BxbxznoJjLXY7z/xXf+cSDTzuUFD0NQkSRDH8a1Yi9/DAVVd46uqAAAzn0GLoF2vZD5HV7nvCX07yJR6ZhFoZmhm5CLIlHoZvAMiuh5PJg9BENyFYXh/nLsZTCDW6iYHLAIuip33miiKHn39dg5cWQIAWGQ2mKCbA1eWF5uDPmXT6aKbgyelFoMN6P/PR51zysEf2/RBFJCWMhsAAAAASUVORK5CYII=';
-$ShowIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4jWNgGBRA3dxDT8PaL17byjeBGKxh7Revbu6hx8DAwMBg7BLKr2nj32EQVWVgFFyipxdeoqPpk6CqYeGhgA9r2/h1GruE8jNoWHgoaFv5JphPvhBjOfl8gMXkS55mU06qEXK1tpVvgoaFhwLcAMtJ5+wtJp93IBbr2AUmoRhAarhhuGDUAAoMMHYJ5de28esklHDQsZatf7eQijkfAwMDeUlZw9JLl1RX0wYAAO5jdH05wh8NAAAAAElFTkSuQmCC';
+$_extensions[2] = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg"); //images extensions
+$_extensions[2] = array_map('strtolower', $_extensions[2]);
+$icon[0]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4jeXTsQ3CMBAFUEs0ZAiomAGkVPRMAkWQ+xROZ2Sd7/81IsQMGYKBaEgTbIVYdJzkwr5/T9fYmF9XjHEPoFVVlzhna22VHQ4hHEhe+75fGWOMqh5JDmPfe78lGbIAgHYcTgHvTJcFVNVN7h/ANPMPQOLtewDAE8BdROoigOQjxrgD0BQBIlIDaJxz6yJgcQbARUQ2M8At27TWViQDgC71mQB4VT3NbbmoXsXclba51HKLAAAAAElFTkSuQmCC';
+$icon[1]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVQ4ja3RMQ6CQBAFUBI7o1Za2VhaGrwA8QDexJYCmikIJITkz9/QUNtxCjuPYOI5jJ1igw0RZAmTTDO7efmz6zhjlogsVTUAIM2Oomj9F1DVwPf9eXMOQEg+RGTWCQCQtnmd7laW5WQIEIrIIsuyraqerYE4jlcAwnqVizXQ+85owK9vrNvrDZDcA3Cb5zYJ3DRNd0VRTAF4Q4BDkiQbkldVfQM49QZI3o0xFcmXMab6tm0C+0dU1SPJvAMQks9WYEh9APFSxanQR2QIAAAAAElFTkSuQmCC';
+$icon[2]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4je2TMQoCMRBFdytbQVtbj+ENRFvB1kbYC2w1IARXdmb+YOE1PIKNN/A+sXEhhmRxtfXDNGH+mz8kKYqEAFxUleIC8CCiacrzJlWl1LmZMYBzVVWjlGndTTKzWzB1G4KZeSYiJ+99Gcc+ZqbeVXUTrmZmVwC7j2K/Uuzbtl309vcAGu99KSIHZp4PBojIKryJwYBczx/wI4CIxgDqwYDuiQOonXOTrxMklfvCQTUisox9T0lBs3UzkBOTAAAAAElFTkSuQmCC';
+$icon[3]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4je2SrQ2AQBSD2QBCcOwErAOq4vS1D9RJpmA9FILkOH6CQNCkpkm/VDTLPiHvfUsSEXeXAGY2xnJJM4DiFEASsdw5V5vZElsnaQBQJQEphRByScNjwK73A14ASJrulgEUJPsN0BxcOeUeQPlk+btaAUZIb/PnWjN7AAAAAElFTkSuQmCC';
+$icon[13]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVQ4jWNgGJbAk4GBIQQP9qXUghCaG+DMwMDARa4BzgwMDEYMDAwsSJiRFAM6GRgYYhkYGAKQsBwpBjAxMDCkMDAwcONRQzAMmKCYbAMIAYIGEEpIWZS6YJABAEwKC7pKuYTEAAAAAElFTkSuQmCC';
+$icon[6]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAd0lEQVQ4jWNgoBXo6+vz7+/vb+jv72+YMGFCVUNDgwhJBkyYMGEyjN3Q0MA3YcKEKoKaYDb29/c3TJw48QAevgNeQwhZQtAVxNCjBgx7AzqhtAM6nZuby97f319NyID5fX19XcjJGJqhGidOnHi1q6tLFa8BpAIAcUCizUwVOu0AAAAASUVORK5CYII=';
+$icon[7]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/ElEQVQ4ja2TPUpDURCFB2wsopVdNuAWYproArKGkM6U0TxIqikeaMi775xTZAXp3nICwdrOBbgAm/sgvN8oDgxc7sz55jCXa/Yf4e53JDcAvJppmg57ASQ37j6o3gNwSd/VWpIkN7XGJjAAj+4+iqK4MjPL81wAnOT7JYC1u99mWXZP8kByBWAba1t3v+4EVHZzBDACMJMUJKW9Ds7qSwCjeH4CsLxoB6U4hPBgZhZCeKyJuwBx8vhM/No2pQYg+VKKAUwkndpc1gAkF+UzAZjE7Te6bARI+gIwl7QjuWpz2QmQ9Angua2nE/DrHpJTkm9Nn6lMkvu+IX+KH1+Xuy051gU6AAAAAElFTkSuQmCC';
+$icon[15]='data:image/gif;base64,R0lGODlhHwAfANUAAP///5qamiYmJuTk5Ly8vMzMzKqqqrCwsKKioujo6NTU1Pb29qioqKCgoK6urtLS0tzc3NjY2Li4uObm5nBwcMbGxmhoaEZGRkhISDIyMvj4+Pr6+lBQUDY2NsTExFZWVpKSkgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAKAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAHwAfAAAG/0CAcEhMPAgOBKDDoQQKxKh0CJEErleAYLu1HDRT6YCALWu5XEolPIwYymY0GmNgAxrwuJybCUcaAHlYZ3sCdxFRA28BgVgHBQMLAAkeIB9ojQYDRGSDAQwKYRsIF4ZlBFR5AJt2a3kQQlZlDBN2QxMMcBKTeaG2Qwp5RnAHv1EHcEdwUMZDBXBIcKzNq3BJcJLUAAtwStrNCNjf3GUIDtLfA9adWMzUz6cPxN/IZQ8JvdTBcAkAsli0jOHSJQSCqmlhNr0awo7RJ19TFORqdAXVEEVZyjyKtG1AgXoZA2iK8oeiKkFZGiCaggelSTiA2LhxidLASjZjBL2siNBOFQ84LyXA+mYEiRJzBO7ZCQIAIfkEAQoAIQAsEAAAAA8ADwAABldAhIPwSISOyGRguZRAAEkkc0oYREPTqSESzU4bXe8ylDEgF4PCYRoSCDCVKEDBCLTdAormasXjD1chFRd+AhaBIQiFAgWBGx+FdoEghRSIHoUciAmFHUEAIfkEAQoAIQAsFgAFAAkAFQAABlnAkDDUiAyHgYBhcEwmCQCh0wkJTRjTgESoyAYSIcAh+xAWsgThIOsQLrKIo1yYENjtHaHnbucIQXwCFCEbH4EBIQiBAgUVF4EWQosHQ3wUGkd2GBVzGQZDQQAh+QQBCgAhACwQABAADwAPAAAGWcCQcChcBI5HBJE4QB4dy2HBGSBEQ4AD9XFVUAOJ6IRBlUQroS+EuEFcBGkkARBKeEAfgR5+NAyEe4F6IQ0RQ4KBGUuIehgGi4gUaJB7FgcaVx0cFAEFV0NBACH5BAEKACEALAUAFgAVAAkAAAZUwJAwVBkajYOjUHBBbJQhgIIROAqugg/IkwgtBoVDYFxdYs+CEHk9DmXQZzWb3DBg4Ff53BAhUvB6awRJQhoHFmiBARIQAFAFARQcHSEIDgQPXUZBACH5BAEKACEALAAAEAAPAA8AAAZZwI5gOEyEjsgjhzj0JJMUpgD0RAakn001VJAKENuQRXqpbA/e0KCqiRJDAYYC8KxghvCA/lAYLJAGGXl6hHpPDYWJTxEGiYRVAwSOAVsAEBKKYSEJDwQOCEEAIfkEAQoAIQAsAAAFAAkAFQAABlnAkNCQERpDFYxAcNRQlkvjAQoVWqiCS6WAFSBCAexnE3pSQUIO1iPsYBPHuBARqNcXQoe9PhAS9gEFQg+ABwAhCYABCkISgAwTIRCKQgB/dkcDBnVyEQ1HQQAh+QQBCgAhACwAAAAADwAPAAAGWMCQcEgsBCicDnGoOVgEUOgyVKFEr0sD5oolZrjdUKQRAkeFA0MgUI5+QJ5ECEBYr8sXxIYIsdupUxJ+AQwTUwmDAQpTIQ+DBwCMdX4FjCEOgwOWCIMLlkEAOw==';
+$icon[12]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVQ4jbXSPUtDMQCF4edKkRaHDv0YBHGXDipIpVC4BVel6C9QkNqpCBZEHHRo6VAQ/cUOjXKVYHMLHsjyJudNSMI/poIjnGC7bPkUb7jEOZbIU8sNLJD94q/YTRHcYj/Cm7hPEbxEdi+eIkmwydx3pqhHeBXPKYIDjCP8Gsfryhn2cIcRdlDDDSZWrxC9nwwPmOMqsA4e8YTDwC4wC2u3ioKu1adJzRC9IsgxKCHo46wI2vgIknzNGOA9dH6klVD+Gq0Sp/07n5Y9F3VkGsILAAAAAElFTkSuQmCC';
+$icon[4]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4jWNgGBRA09I3QMvWr03Lxq8BGWvb+vVrWPlYEjRAy8avAYcUo4aN70QGBgZGcg1g0LDysdSy8atHuMy3XdPSNwCrAYpWXvJa1r6N6F7B9JrvZjUzH30MA7SsfRsZGBhYCHmZgYGBQcvWrw3TADxewTAAWe2oAQwMWjZ+9RQa4JOoZeNXrGXrv0fbyjeBENay9svQsvYtQTFR0dxZXMPCQ4EYLGvoKkWsSwkCAJwBVLOXJRgIAAAAAElFTkSuQmCC';
+$icon[11]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA9UlEQVQ4jc2QTUoDQRCFs0jEn7WuFQ8QFx6gNwYXunP0Cq6EgVkI2XQgzIRuut4rG8HaCV7AI7oxYRwSMhACFjRNP977qroGg39XZjbKORcApiSfiqI46B2u6/pUVd9CCFfOuWFKaUzyPcZ41gugqnMzO25rVVWdkPwiOSO5EJHHjQCSsx5NnlNK43Xhl5xzsQ1QluWRqloI4XIlisiE5F3XLCK3qvrtvT9s6865IUlZCQCmZjZaE35V1U8AH13In++SvBGR+7YBwMPv7ZumOReR640TLHegqnMAvnVc5+0BeJKIMV5s29dyEt/LuE+A2wmw9/oBfgaBG4x+og4AAAAASUVORK5CYII=';
+$icon[5]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVQ4jWNgoBZQMvdR1bL2n6Rl49eADWtb+U3QtvbfyKCiwo7VAA1rv3gNCw8FXBYo67mJadn6Tday9p+E1RBtK98EfAYwMDAwaNr4BGrb+vVrWfnFkGUAAwMDg4aFh4K2lW/CqAGjBmA1QMPGN1LF1F2bkAGqFt6aGja+kRgSxsbGXNo2fs24MhMc2/q1CamY8xGyiGgAAMh+SQebq1EfAAAAAElFTkSuQmCC';
+$icon[10]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA00lEQVQ4jd3PPQrCQBAF4BWE3EFsvMk2Vl7A1t5tLESwscywsO+91ILXsbJPKVjqDYTYpBCJiX+Vr5xhvplx7v9iZgMAO0kXkldJh5TS9OVhSUdJ0cyGIYSM5BhAKWnVCdSbYxNM8hxjHLUCki5mNmzqkdySnLcCJK8hhOxJLwew7rrgQHL8WK+qqidpD2DSCqSUpgBKMxs8DC8lnbz3/VagvmJF8lz/nEvaSzoVRVEB2HQCzjkXYxyRnANYA5h47/sANm8hTblDFt8gC0mzj4Gf5wYc04KjAuZmyQAAAABJRU5ErkJggg==';
+$icon[14]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAwklEQVQ4jb2QPQrCQBCFFyvxBtYKuYOVnZ3nCF7BZpsUG9id96bLDTyDlaWnEGzt0xliJYSwJOvvg9cMzPfejDG/UlEUc5K5iOwBbIwxk+RlAFsAtaq2TwM4VlU1S0oGUJM8O+cya+0UwI5kQ9KPAkjmqto657JeqwPJ2yhARKyqtqnz7wIABJJN93l9k7yGEJZRQGyZ5ElEbNfe+1UUMJTctYjYZECsgYis/wd46YSPnxhCKAHch9IBXMqyXEQB7+gBtIEmVWp3raAAAAAASUVORK5CYII=';
+$icon[9]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SMU7DQBBFp+UacACKXMCNJYLCCVxzHDf2CfAqVdaz402NiJK0WRcUuUBAlAEbClJ8CuLIctaS63xpNdJo9Pft7Cc6Kk1TkEeFtcIiyI2BZsbrdqt9c0REI1+TRdBo4xwAIDfm3KSPgEXw9v4BAFiu1tg4BxbxznoJjLXY7z/xXf+cSDTzuUFD0NQkSRDH8a1Yi9/DAVVd46uqAAAzn0GLoF2vZD5HV7nvCX07yJR6ZhFoZmhm5CLIlHoZvAMiuh5PJg9BENyFYXh/nLsZTCDW6iYHLAIuip33miiKHn39dg5cWQIAWGQ2mKCbA1eWF5uDPmXT6aKbgyelFoMN6P/PR51zysEf2/RBFJCWMhsAAAAASUVORK5CYII=';
+$icon[8]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4jWNgGBRA3dxDT8PaL17byjeBGKxh7Revbu6hx8DAwMBg7BLKr2nj32EQVWVgFFyipxdeoqPpk6CqYeGhgA9r2/h1GruE8jNoWHgoaFv5JphPvhBjOfl8gMXkS55mU06qEXK1tpVvgoaFhwLcAMtJ5+wtJp93IBbr2AUmoRhAarhhuGDUAAoMMHYJ5de28esklHDQsZatf7eQijkfAwMDeUlZw9JLl1RX0wYAAO5jdH05wh8NAAAAAElFTkSuQmCC';
 /*---------------------------arabic -------------------*/
 
 $lang[0] =  'ar';
@@ -150,6 +150,13 @@ $lang[42] =  'Information';
 
 $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
+/*----------------------------------------------*/
+
+    $is_rtl=false;
+if( in_array( $lang[0], $RTL_languages  ) ) 
+	$is_rtl=true;
+
+
 function Login()
 {
 	global $login_user,$login_pass;
@@ -217,9 +224,18 @@ function unlinkRecursive($dir, $deleteRootToo)
     return;
 }
 
+function text_position($position=0)
+{
+global $is_rtl;
+if($position==0)
+{if($is_rtl ) echo 'left'; else echo 'right';}
+else
+{if($is_rtl ) echo 'right'; else echo 'left';}	
+}
+
 function css()
-{  global $RTL_languages,$lang;
-	
+{  
+global $is_rtl;	
 $css='';
 
 if(file_exists('./css/bootstrap.min.css'))
@@ -242,11 +258,11 @@ if(file_exists('./js/jquery.twbsPagination.min.js'))
 else 
 	$css.='<script src="//raw.githubusercontent.com/esimakin/twbs-pagination/develop/jquery.twbsPagination.min.js"></script>';
 
-	if( in_array( $lang[0], $RTL_languages  ) ) 
-		if(file_exists('./css/bootstrap-rtl.min.css'))
-	        $css.='<link href="./css/bootstrap-rtl.min.css" rel="stylesheet">';
-	    else  
-			$css.='<link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/v3.3.4/dist/css/bootstrap-rtl.min.css">';
+if( $is_rtl ) 
+if(file_exists('./css/bootstrap-rtl.min.css'))
+	$css.='<link href="./css/bootstrap-rtl.min.css" rel="stylesheet">';
+else  
+	$css.='<link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/v3.3.4/dist/css/bootstrap-rtl.min.css">';
          	
 	return $css;
 
@@ -256,11 +272,21 @@ function alert($str)
 	global $lang;
 	return '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>'.$lang[33].'!</strong> '.$str.'</div>';
 }
+
+function  AJAX_request()
+{
+if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+	return true ; else return false; 
+}
+
+
 if(!Login() && $LoginDialog && ( isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['delete']) || isset($_GET['ReadFile']) || isset($_GET['newfolder']) )  )
 {
   header('Content-Type: application/json');
   die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
 }
+
+
 if(!Login() && $LoginDialog)
 {
 	die('<!DOCTYPE html>
@@ -268,14 +294,14 @@ if(!Login() && $LoginDialog)
 <head>
 <title>'.$lang[22].'</title>
 <meta charset="utf-8">
-<link href="'.$UserIcon.'" rel="icon" type="image/x-icon" />
+<link href="'.$icon[12].'" rel="icon" type="image/x-icon" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 '.css().'
 <style>
 body {background: #F1F1F1 none repeat scroll 0% 0%;}
-.UserIcon{background:url( '.$UserIcon.') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.PassIcon{background:url( '.$PassIcon.') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 </style>
 </head>
 <body>
@@ -309,27 +335,47 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
-if(isset($_GET['ReadFile'])) {file_exists_str($_GET['ReadFile']);if(in_array(extension($_GET['ReadFile']), $CanReadExt) || count($CanReadExt)==0 )die( _ReadFile($_GET['ReadFile']) ) ; else die($lang[7]);} 
-if(isset($_GET['copy'])) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
-if(isset($_GET['delete'])) {file_exists_str($_GET['delete']);@unlinkRecursive($_GET['delete'],true);	} 
-if(isset($_GET['newfolder'])) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
-if(isset($_GET['rename'])) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
-if(isset($_GET['unzip'])) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
+if(isset($_GET['ReadFile']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['ReadFile']);if(in_array(extension($_GET['ReadFile']), $_extensions[1]) || count($_extensions[1])==0 )die( _ReadFile($_GET['ReadFile']) ) ; else die($lang[7]);} 
+if(isset($_GET['copy']) && AJAX_request() ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
+if(isset($_GET['delete']) && AJAX_request() ) {file_exists_str($_GET['delete']);@unlinkRecursive($_GET['delete'],true);	} 
+if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
+if(isset($_GET['rename']) && AJAX_request() ) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
+if(isset($_GET['unzip']) && AJAX_request() ) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
 if(isset($_GET['listFolderFiles'])) {die(listFolderFiles($directory));} 
 
- if ( isset($_GET['uploadfile']) && isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) ) { 
-$tmp_name = basename($_FILES["inputFileUpload"]["name"]);
-$tmp_size = $_FILES["inputFileUpload"]["size"] ;
-$tmp_type = $_FILES["inputFileUpload"]["type"] ;
-$error    = $_FILES["inputFileUpload"]["error"] ;
-$name     = $_FILES["inputFileUpload"]["name"] ;
-$target_file = $directory .'/'.$tmp_name; 
-if(!in_array(extension($tmp_name), $Allowed_extensions || count($Allowed_extensions)==0 ))
-    die(json_encode(array( 'code' => '0','status' => $lang[7] )));
-if(move_uploaded_file($_FILES["inputFileUpload"]["tmp_name"], $target_file))	
-    die(json_encode(array( 'code' => '1','status' => $lang[34] ,'url' => $target_file , 'tmp_name' =>  $tmp_name , 'size' => $tmp_size , 'type' => $tmp_type , 'error' => $error , 'name' => $name)));
+ if ( isset($_GET['uploadfile']) ) { 
+ //&& isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) 
+ $response = array();
+ 
+ if (is_array($_FILES['inputFileUpload']['name']) || is_object($_FILES['inputFileUpload']['name']))
+ foreach($_FILES['inputFileUpload']['name'] as $n => $name) {
+	
+	if(!empty($name)) {	
+	$tmp_name = basename($name);
+	$tmp_size = $_FILES["inputFileUpload"]["size"][$n] ;
+	$tmp_type = $_FILES["inputFileUpload"]["type"][$n] ;
+	$error    = $_FILES["inputFileUpload"]["error"][$n] ;
+	$name_    = $_FILES["inputFileUpload"]["name"][$n] ;
+	$target_file = $directory .'/'.$tmp_name; 	
+		
+// )
+if( in_array(extension($tmp_name), $_extensions[0]  ) || count($_extensions[0]) ==0 )
+ {
+	
+if(move_uploaded_file($_FILES["inputFileUpload"]["tmp_name"][$n], $target_file))	
+    $response[] =array( 'code' => '1','status' => $lang[34] ,'url' => $target_file , 'tmp_name' =>  $tmp_name , 'size' => $tmp_size , 'type' => $tmp_type , 'error' => $error , 'name' => $name_);
+elseif($error!=0)
+    $response[] =array( 'code' => '0','status' => $lang[33].'_'.$error );	
+elseif($tmp_size>ini_get('upload_max_filesize'))
+    $response[] =array( 'code' => '0','status' => $lang[37] );		
 else
-	die(json_encode(array( 'code' => '0','status' => $lang[33] )));
+	$response[] =array( 'code' => '0','status' => $lang[33] );	
+	
+ } else $response[] = array( 'code' => '0','status' => $lang[7] );  
+} else $response[] = array( 'code' => '0','status' => $lang[38] );  
+}
+ die(json_encode($response));										
+ 
 }; //$alert_msg=$lang[38];
 
 //exit(header('Location: ?page='.$page.'&dir='.$directory.'"'));
@@ -354,14 +400,14 @@ if(!function_exists('scandir')) {
 
 function FilterScanDir($directory)
 {
-	global $Allowed_extensions;
+	global $_extensions;
 $times	= array() ;
 $files_tmp = array() ;	
 $total_files = 0;
 $files = (is_dir($directory)) ? @scandir($directory) : array() ;	
 if (is_array($files) || is_object($files))
 foreach($files as $file)
-if(  ( in_array(extension($file), $Allowed_extensions  ) || count($Allowed_extensions) ==0 ) && $file !=='.'  )	
+if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==0 ) && $file !=='.'  )	
 {
 	if($file !=='..')
 	$total_files++;
@@ -372,13 +418,14 @@ return array( 'list' => $files_tmp ,'times' => $times , 'count' => $total_files 
 }
 
 function listFolderFiles($dir){
-	global $Allowed_extensions;
+	global $_extensions;
 	 if (is_file($dir) === true) 
 		 return ;
     $ffs = scandir($dir);
     echo ' <ul>';
+	if (is_array($ffs) || is_object($ffs))
     foreach($ffs as $ff){ 
-        if($ff != '.' && $ff != '..' &&  ( in_array(extension($ff), $Allowed_extensions  ) || count($Allowed_extensions) ==0 )  ){
+        if($ff != '.' && $ff != '..' &&  ( in_array(extension($ff), $_extensions[0]  ) || count($_extensions[0]) ==0 )  ){
             echo '<li><a href="'.$dir.'/'.$ff.'">'.$ff;
             if(is_dir($dir.'/'.$ff)) listFolderFiles($dir.'/'.$ff);
             echo '</a></li>';
@@ -423,7 +470,7 @@ $files = array_slice($files, $offset, $perpage);
 
 function showfile($file)
 {
-global $directory,$images_extensions,$lang;
+global $directory,$_extensions,$lang;
 
 if($file=='.' )		
 	return '<a href="?" onclick="getContent('."'dir=".$directory.'/'.$file."'".',0); return false;"><strong>'.$file.'</strong></a>';
@@ -437,7 +484,7 @@ elseif($file=='..' )
 elseif(is_dir($directory.'/'.$file) && file_exists($directory.'/'.$file) )	
 	return '<span class="CFolderIcon"></span><a href="?" onclick="getContent('."'dir=".$directory.'/'.$file."'".',0); return false;">'.$file.'</a>';
 	
-elseif (in_array(extension($file), $images_extensions  ))
+elseif (in_array(extension($file), $_extensions[2]  ))
 	return  '<span class="ImageIcon"></span><a href="'.$directory.'/'.$file.'">'.$file.'</a>' ;
 	
 elseif (in_array(extension($file), array("zip","rar","7z","gzip","tar","wim","xz")  ))
@@ -475,7 +522,7 @@ return @filesize_formatted($directory.'/'.$file);
 
 function action($file)
 {
-global $directory,$page,$show_file_or_dir,$lang,$total_files,$images_extensions;
+global $directory,$page,$show_file_or_dir,$lang,$total_files,$_extensions;
 if($file=='Match not found' )
 	return '--'; 
 if( $file =='..')
@@ -492,7 +539,7 @@ if($show_file_or_dir)
         unset($count);		
 	}
 		
-	elseif (in_array(extension($file), $images_extensions  ))
+	elseif (in_array(extension($file), $_extensions[2]  ))
 	   $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetShowFileModalattr('."'".$directory.'/'.$file."'".'); return false;" href="#"><span class="ImageIcon"></span></a> ' ;
 	elseif (in_array(extension($file), array("zip","rar","7z","gzip","tar","wim","xz")  ))
 	   $html.='<a data-toggle="tooltip" title="'.$lang[41].'" onclick="SetZipFileModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="ZipIcon"></span></a> ' ;
@@ -519,9 +566,9 @@ global $directory,$page,$lang;
 
 $html='<li><a href="#" onclick="getContent('."'dir=."."'".',0); return false;">'.$lang[4].'</a></li>';
 $newDir='.';
-$element = explode('/',$directory);
-
-foreach ( $element as $key_value )
+$elements = explode('/',$directory);
+if (is_array($elements) || is_object($elements))
+foreach ( $elements as $key_value )
 {
 	if($key_value!='.'){
 	$newDir = $newDir.'/'.$key_value;
@@ -547,7 +594,7 @@ if($file=='Match not found') return '--';
 return $times[$index];
 };
 
-if(isset($_GET['table']))
+if(isset($_GET['table']) && AJAX_request() )
 {
 	
 $html='<div class="table-responsive"><table class="table table-hover '.$table_fixed.'"><thead><tr>';
@@ -596,6 +643,9 @@ unset($offset);
 //unset($total_pages);
 unset($perpage);
 unset($table_fixed);
+unset($RTL_languages);
+unset($show_file_or_dir);
+unset($alert_msg);
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
@@ -604,29 +654,29 @@ unset($table_fixed);
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <?php echo css();?>  
-		<link href="<?php echo $OFolderIcon;?>" rel="icon" type="image/x-icon" />
+		<link href="<?php echo $icon[4];?>" rel="icon" type="image/x-icon" />
 		<title><?php echo $lang[11]; ?></title>
         
 		<style>
 
-.ZipIcon {background:url(<?php echo $ZipIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.ImageIcon {background:url(<?php echo $ImageIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.CopyIcon {background:url(<?php echo $CopyIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}		
-.CFolderIcon {background:url(<?php echo $CFolderIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.OFolderIcon {background:url(<?php echo $OFolderIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.PhpIcon{background:url( <?php echo $PhpIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.RemoveIcon {background:url(<?php echo $RemoveIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.RenameIcon{background:url( <?php echo $RenameIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.ShowIcon {background:url(<?php echo $ShowIcon;?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
-.TreeIcon{background:url( <?php echo $TreeIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.ExplorIcon{background:url( <?php echo $ExplorIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.UploadIcon{background:url( <?php echo $UploadIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.UserIcon{background:url( <?php echo $UserIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.LogoutIcon{background:url(  <?php echo $LogoutIcon;?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.ZipIcon {background:url(<?php echo $icon[0];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.ImageIcon {background:url(<?php echo $icon[1];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.CopyIcon {background:url(<?php echo $icon[2];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}		
+.CFolderIcon {background:url(<?php echo $icon[3];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.OFolderIcon {background:url(<?php echo $icon[4];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.PhpIcon{background:url( <?php echo $icon[5];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.RemoveIcon {background:url(<?php echo $icon[6];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.RenameIcon{background:url( <?php echo $icon[7];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.ShowIcon {background:url(<?php echo $icon[8];?>) no-repeat left center; padding: 5px 0 5px 25px;margin-left: 5px;}
+.TreeIcon{background:url( <?php echo $icon[9];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.ExplorIcon{background:url( <?php echo $icon[10];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.UploadIcon{background:url( <?php echo $icon[11];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.UserIcon{background:url( <?php echo $icon[12];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.LogoutIcon{background:url(  <?php echo $icon[13];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 
 .table,.breadcrumb,.navbar-default{border: 1px solid #D8D8D8;background: #fff none repeat scroll 0% 0%;}
 .container_01{border: 1px solid #D8D8D8;background: #fff none repeat scroll 0% 0%;padding: 25px;margin-bottom:20px;}
-.Loading{background:url(<?php echo $Loading;?>) no-repeat center center; padding: 25px ;}
+.Loading{background:url(<?php echo $icon[15];?>) no-repeat center center; padding: 25px ;}
 body {background: #F1F1F1 none repeat scroll 0% 0%;margin-bottom:20px;}
 td{font-size: 12px;}
 .pagination { margin:0px;}
@@ -644,7 +694,7 @@ td{font-size: 12px;}
 .treeview ul ul {margin-left:.5em}
 
 .treeview li {margin:0;padding:0 1em;line-height:2em;position:relative}
-<?php if( in_array( $lang[0], $RTL_languages  ) ) { ?>
+<?php if( $is_rtl ) { ?>
 .treeview ul:before {content:"";display:block;width:0;position:absolute;top:0;right:0;border-right:1px solid;bottom:15px;}
 .treeview ul li:before {content:"";display:block;width:10px;height:0;border-top:1px solid;margin-top:-1px;position:absolute;top:1em;right:0}
 <?php } else {?>
@@ -675,16 +725,13 @@ td{font-size: 12px;}
 	  
 	 <div class="collapse navbar-collapse navbar-ex1-collapse"> 
 	  
-
-<ul class="nav navbar-nav navbar-<?php if(in_array($lang[0], $RTL_languages ) ) echo 'left'; else echo 'right';?>">
-      
-	  
+<ul class="nav navbar-nav navbar-<?php text_position();?>">       
  <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-       <span class="UserIcon"> <?php /*if(isset($_SESSION['login']['user'])) echo $_SESSION['login']['user']; */?>
+       <span class="UserIcon"></span> <?php /*if(isset($_SESSION['login']['user'])) echo $_SESSION['login']['user']; */?>
       <b class="caret"></b>
     </a>
-    <ul class="dropdown-menu dropdown-menu-<?php if(in_array($lang[0], $RTL_languages ) ) echo 'left'; else echo 'right';?>">
+    <ul class="dropdown-menu dropdown-menu-<?php text_position();?>">
 	  <li><a href="#" onclick="SetNewFolderModalattr();return false;"><span class="CFolderIcon"></span> <?php echo $lang[29];?></a></li>
 	  <li><a href="#" onclick="SetUploadFileModalattr();return false;"><span class="UploadIcon"></span> <?php echo $lang[30];?></a></li>	  
 	  <?php if($LoginDialog) {?>
@@ -694,38 +741,18 @@ td{font-size: 12px;}
     </ul>
   </li>
 </ul>
-	
-	   
-
-	   
-	   
-	   
-        <div class = "navbar-form navbar-<?php if(in_array($lang[0], $RTL_languages ) ) echo 'left'; else echo 'right';?>"  role="search">
+	 
+        <div class = "navbar-form navbar-<?php text_position();?>"  role="search">
         <div class="input-group">
             <input type="text" class="form-control" id="inputSearch" placeholder="<?php echo $lang[19];?>" name="q">
-			
 			<input type="hidden" value="<?php echo $directory.'&page='.$page;?>" id="dirInputSearch">
             <div class="input-group-btn">
                 <button class="btn btn-default" onclick="Search()" type="submit"><span class="ExplorIcon" style="padding: 5px 0px 5px 18px;"></span></button>
             </div>
         </div>
-        </div>
-		
-		
-		
-		    
-          
-              
-		
-		
-		
-		
-		
-	</div>
-	
-    </div>
-	
-
+        </div>		
+	</div>	
+    </div>	
 </div>
 
 
@@ -749,7 +776,7 @@ td{font-size: 12px;}
       </div>
      <div class="modal-footer">
 	 
-	    <span id="RenameLabelsuccess" class="label label-success"></span> 
+	    <span id="RenameLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
 	    <button  type="button" class="btn btn-success"  onclick="renameAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
@@ -779,7 +806,7 @@ td{font-size: 12px;}
       </div>
      <div class="modal-footer">
 	 
-	    <span id="DeleteLabelsuccess" class="label label-success"></span> 
+	    <span id="DeleteLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
 	    <button  type="button" class="btn btn-success" onclick="deleteAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
@@ -805,11 +832,11 @@ td{font-size: 12px;}
 	    <input id="Zipdir" type="hidden" >	
      <input class="form-control" id="FolderUnzipInput" >
 
-      <div "ZipLoad"></div>
+      <div id="ZipLoad"></div>
       </div>
      <div class="modal-footer">
 	 
-	    <span id="ZipLabelsuccess" class="label label-success"></span> 
+	    <span id="ZipLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
 	    <button  type="button" class="btn btn-success" onclick="zipAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
@@ -836,7 +863,7 @@ td{font-size: 12px;}
       </div>
      <div class="modal-footer">
 	 
-	    <span id="NewFolderLabelsuccess" class="label label-success"></span> 
+	    <span id="NewFolderLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
 	    <button  type="button" class="btn btn-success"  onclick="newfolderAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
@@ -862,7 +889,7 @@ td{font-size: 12px;}
       </div>
      <div class="modal-footer">
 	 
-	    <span id="CopyLabelsuccess" class="label label-success"></span> 
+	    <span id="CopyLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
 	    <button  type="button" class="btn btn-success"  onclick="copyAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
@@ -886,14 +913,14 @@ td{font-size: 12px;}
 		
       </div>
       <div class="modal-body">
-	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$Allowed_extensions).' }</code> , '.$lang[37].' : <code>'.ini_get('upload_max_filesize').'</code>'; ?></p>
+	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$_extensions[0]).' }</code> , '.$lang[37].' : <code>'.ini_get('upload_max_filesize').'</code>'; ?></p>
 	<form  id="FileUploadForm" enctype="multipart/form-data" method="post">
 	    <input id="UploadFileDir" type="hidden" >	
 
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn btn-default btn-file">
-                         <?php echo $lang[32]; ?> <input name="inputFileUpload" type="file" >
+                         <?php echo $lang[32]; ?> <input name="inputFileUpload[]" type="file" multiple >
                     </span>
                 </span>
                 <input type="text" class="form-control" readonly id="inputFileUpload">
@@ -901,8 +928,8 @@ td{font-size: 12px;}
       </div>
      <div class="modal-footer">
 	 
-	    <span id="FileUploadLabelsuccess" class="label label-success"></span> 
-	    <button type="submit" name="upload" class="btn btn-success"  ><?php echo $lang[14]; ?></button> 
+	    <span id="FileUploadLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
+	    <button type="submit" name="upload" class="btn btn-success"  id="FileUploadBtn" disabled><?php echo $lang[14]; ?></button> 
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 
         </form>
@@ -921,7 +948,7 @@ td{font-size: 12px;}
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><?php echo $lang[3] ;?> <code id="imgUrl"></code><mark id="imgNum" class="small pull-left"></mark></h4>
+          <h4 class="modal-title"><?php echo $lang[3] ;?> <code id="imgUrl"></code></h4>
         </div>
         <div class="modal-body">
 		  <input id="filenameDir" type="hidden" >	
@@ -1036,7 +1063,9 @@ $.fn.extend({
             processData: false,
             success:function(data){
 				$('#FileUploadLabelsuccess').html('');
+				$('#inputFileUpload').val('');
 				$('#UploadFile').modal('hide');	
+				$("#FileUploadBtn").attr("disabled", "disabled");
 				getContent("dir="+dir,0)	;
             },
             error: function(data){
@@ -1058,9 +1087,19 @@ $.fn.extend({
 						numFiles = input.get(0).files ? input.get(0).files.length : 1,
 						label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 						input.trigger('fileselect', [numFiles, label]);
+						
+						if(numFiles==0)		
+							$("#FileUploadBtn").attr("disabled", "disabled");
+						else
+							$("#FileUploadBtn").removeAttr("disabled");
+						
+						if(numFiles>1)
+						$('#inputFileUpload').val('<?php echo $lang[10];?> '+numFiles);
+						else
 						$('#inputFileUpload').val(label);
 						
 						}); 	
+						
 			
 			$("#content").html(LoadingHtml);
 		     $.getJSON("?table&page=1", function(result){ 
@@ -1073,10 +1112,10 @@ $.fn.extend({
 			 $('#pagination').twbsPagination({
         totalPages: result.total,
         visiblePages: 5,
-		first : '<?php  if(in_array($lang[0], $RTL_languages  ) ) echo '→'; else echo '←' ?>',
+		first : '<?php  if($is_rtl ) echo '→'; else echo '←' ?>',
 		prev : '«',
 		next : '»',
-		last : '<?php  if(in_array($lang[0], $RTL_languages  ) ) echo '←' ;else echo '→' ?>',
+		last : '<?php  if($is_rtl ) echo '←' ;else echo '→' ?>',
         onPageClick: function (event, page) {
             $("#content").html(LoadingHtml);
 			$.getJSON("?table&page="+page+"&alert="+result.alert, function(result){ $("#content").html(result.table); $('#breadcrumb').html(result.dirHtml); $('#alert').html(result.alert);});		 
@@ -1132,10 +1171,10 @@ $.fn.extend({
 		        $('#pagination').twbsPagination({
                     totalPages: data.total,
                     visiblePages: 5,
-		            first : '<?php  if(in_array($lang[0], $RTL_languages  ) ) echo '→'; else echo '←' ?>',
+		            first : '<?php  if($is_rtl ) echo '→'; else echo '←' ?>',
 		            prev : '«',
 		            next : '»',
-		            last : '<?php  if(in_array($lang[0], $RTL_languages  ) ) echo '←' ;else echo '→' ?>',
+		            last : '<?php  if($is_rtl ) echo '←' ;else echo '→' ?>',
                     onPageClick: function (event, page) {
 		            if(type==0)  { 	
 			          $("#content").html(LoadingHtml);
@@ -1180,6 +1219,7 @@ $.fn.extend({
 				dir = $('#directory').val();
 				dir = replace_dir(dir); 
 				$('#UploadFileDir').val(dir);
+				$('#inputFileUpload').val('');
 				$('#ShowFile').modal('hide');	
 				$('#UploadFile').modal('show');				
 			 };
@@ -1251,8 +1291,8 @@ $.fn.extend({
 				$("#listFolderFiles").html('');
                 $("#HrefBrowse").html('<?php echo $lang[3];?>');
 				$("#HrefTree").html('');
-				var FileTypes = [ <?php if(count($CanReadExt)!=0) echo "'".implode("','",$CanReadExt)."'" ; ?>]; 
-				var ImgTypes = [ <?php if(count($images_extensions)!=0) echo "'".implode("','",$images_extensions)."'" ; ?>]; 
+				var FileTypes = [ <?php if(count($_extensions[1])!=0) echo "'".implode("','",$_extensions[1])."'" ; ?>]; 
+				var ImgTypes = [ <?php if(count($_extensions[2])!=0) echo "'".implode("','",$_extensions[2])."'" ; ?>]; 
 				
 				$("#Result").html('<center><br><br><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
 	            $('#filenameInput').val(filename);$('#filenameDir').val(dir);$('#imgUrl').html(filename);
@@ -1284,7 +1324,7 @@ $.fn.extend({
 				if( $.inArray(getExt(filename), FileTypes  )!==-1 || FileTypes.length ==0 ) {
 				
 					$.get("?ReadFile="+dir, function(result){ 
-                     $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ;">'+escapeTags(result)+'</textarea>'); 
+                     $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ; box-shadow: inset 0 0px 1px rgba(0,0,0,.075);border-top-left-radius: 0px; ">'+escapeTags(result)+'</textarea>'); 
 					});	
 					return;
 				};
@@ -1364,8 +1404,35 @@ $.fn.extend({
 	         });	
   
              };
-            //$(window).unload( function () {  var jqxhr.abort(); } );
+			 delete LoadingHtml; 
+			 /*
+			 for ( var i in window ) {
+              console.log(i, typeof window[i], window[i]);
+	         }*/
         </script>
 		</div>
     </body>
     </html>
+	<?php 
+	// free memory
+	unset($lang);
+	unset($icon);
+	unset($_extensions);
+	
+	unset($directory);
+	unset($page);
+	unset($total_pages);
+	unset($LoginDialog);
+	unset($login_user);
+	unset($login_pass);
+	unset($is_rtl);
+	unset($units);
+    unset($_SERVER); unset($_SESSION);unset($_COOKIE);
+	/*
+	echo  memory_get_usage();
+	$arr = get_defined_vars();
+	
+	echo '<pre>';
+	print_r($arr);
+	echo '</pre>';*/
+	?>
