@@ -19,6 +19,7 @@ Features
 config
 -----------
 ```php
+$charset          = 'utf-8';
 $LoginDialog      = true;
 $show_file_or_dir = true ; 
 $perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
