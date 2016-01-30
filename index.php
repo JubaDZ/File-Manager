@@ -37,7 +37,7 @@ $RTL_languages      = array_map('strtolower', $RTL_languages);
 $Allowed_extensions = array_map('strtolower', $Allowed_extensions);
 $CanReadExt         = array_map('strtolower', $CanReadExt);
 
-$images_extensions = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg");
+$images_extensions  = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg");
 $images_extensions  = array_map('strtolower', $images_extensions);
 $ZipIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4jeXTsQ3CMBAFUEs0ZAiomAGkVPRMAkWQ+xROZ2Sd7/81IsQMGYKBaEgTbIVYdJzkwr5/T9fYmF9XjHEPoFVVlzhna22VHQ4hHEhe+75fGWOMqh5JDmPfe78lGbIAgHYcTgHvTJcFVNVN7h/ANPMPQOLtewDAE8BdROoigOQjxrgD0BQBIlIDaJxz6yJgcQbARUQ2M8At27TWViQDgC71mQB4VT3NbbmoXsXclba51HKLAAAAAElFTkSuQmCC';
 $ImageIcon='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVQ4ja3RMQ6CQBAFUBI7o1Za2VhaGrwA8QDexJYCmikIJITkz9/QUNtxCjuPYOI5jJ1igw0RZAmTTDO7efmz6zhjlogsVTUAIM2Oomj9F1DVwPf9eXMOQEg+RGTWCQCQtnmd7laW5WQIEIrIIsuyraqerYE4jlcAwnqVizXQ+85owK9vrNvrDZDcA3Cb5zYJ3DRNd0VRTAF4Q4BDkiQbkldVfQM49QZI3o0xFcmXMab6tm0C+0dU1SPJvAMQks9WYEh9APFSxanQR2QIAAAAAElFTkSuQmCC';
@@ -181,6 +181,7 @@ function recurse_copy($src,$dst) {
 } 
 function openZipArchive($file,$extract_path)
 {
+	global $alert_msg,$lang;
 	if(!file_exists($extract_path))
     @mkdir($extract_path); 
 
@@ -191,6 +192,7 @@ if ($res === TRUE) {
   $zip->close();
    return true;
 } else {
+  $alert_msg=$lang[33].' - '.$lang[41];
   return false;
 }	
 }
@@ -450,11 +452,11 @@ function extension($file)
 	global $lang;
 if($file=='Match not found')
 	return '--'; 
-$extension=pathinfo($file, PATHINFO_EXTENSION )	;
+$extension=strtolower(pathinfo($file, PATHINFO_EXTENSION ))	;
 if($extension=='') 
 	return 'dir';//$lang[16] ; 
 else 
-	return strtolower($extension); //ucfirst
+	return $extension; //ucfirst
 }
 
 
@@ -493,7 +495,7 @@ if($show_file_or_dir)
 	elseif (in_array(extension($file), $images_extensions  ))
 	   $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetShowFileModalattr('."'".$directory.'/'.$file."'".'); return false;" href="#"><span class="ImageIcon"></span></a> ' ;
 	elseif (in_array(extension($file), array("zip","rar","7z","gzip","tar","wim","xz")  ))
-	   $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetZipFileModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="ZipIcon"></span></a> ' ;
+	   $html.='<a data-toggle="tooltip" title="'.$lang[41].'" onclick="SetZipFileModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="ZipIcon"></span></a> ' ;
 	else	
        $html.='<a data-toggle="tooltip" title="'.$lang[3].'" onclick="SetShowFileModalattr('."'".$directory.'/'.$file."'".'); return false;" href="#"><span class="ShowIcon"></span></a> ' ;
 }
@@ -1224,7 +1226,7 @@ $.fn.extend({
 
 	        function getExt(filename)
 	        {
-			  return filename.substr(filename.lastIndexOf('.')+1)
+			  return filename.substr(filename.lastIndexOf('.')+1).toLowerCase();
 		      //return filename.split('.').pop();
 		    }
 			
