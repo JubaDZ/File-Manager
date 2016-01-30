@@ -3,12 +3,14 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 $LoginDialog      = true;
+$login_user       = 'admin';
+$login_pass       = 'admin';
+
 $show_file_or_dir = true ; // can show directory
 $perpage          = (isset($_GET['perpage'])) ? (int)$_GET['perpage'] : 10;
 $table_fixed      = (isset($_GET['perpage'])) ? 'table-fixed' : '';
 $alert_msg        = (isset($_GET['alert'])) ? $_GET['alert'] : '';
-$login_user       = 'admin';
-$login_pass       = 'admin';
+
 
 @session_start();
 if(isset($_GET['logout'])) { session_destroy() ; exit(header('Location: '.$_SERVER['PHP_SELF'])); }
@@ -280,7 +282,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED
 }
 
 
-if(!Login() && $LoginDialog && ( isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['delete']) || isset($_GET['ReadFile']) || isset($_GET['newfolder']) )  )
+if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['delete']) || isset($_GET['readfile']) || isset($_GET['newfolder']) )  )
 {
   header('Content-Type: application/json');
   die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
@@ -335,13 +337,13 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
-if(isset($_GET['ReadFile']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['ReadFile']);if(in_array(extension($_GET['ReadFile']), $_extensions[1]) || count($_extensions[1])==0 )die( _ReadFile($_GET['ReadFile']) ) ; else die($lang[7]);} 
+if(isset($_GET['readfile']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['readfile']);if(in_array(extension($_GET['readfile']), $_extensions[1]) || count($_extensions[1])==0 )die( _readfile($_GET['readfile']) ) ; else die($lang[7]);} 
 if(isset($_GET['copy']) && AJAX_request() ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
 if(isset($_GET['delete']) && AJAX_request() ) {file_exists_str($_GET['delete']);@unlinkRecursive($_GET['delete'],true);	} 
 if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
 if(isset($_GET['rename']) && AJAX_request() ) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
 if(isset($_GET['unzip']) && AJAX_request() ) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
-if(isset($_GET['listFolderFiles'])) {die(listFolderFiles($directory));} 
+if(isset($_GET['listFolderFiles'])  && AJAX_request() ) {die(listFolderFiles($directory));} 
 
  if ( isset($_GET['uploadfile']) ) { 
  //&& isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) 
@@ -551,7 +553,7 @@ $html.='<a data-toggle="tooltip" title="'.$lang[20].'" onclick="SetRenameModalat
     return $html;
 }
 
-function _ReadFile($file,$Modes="r")
+function _readfile($file,$Modes="r")
 {
 global $lang;
 $myfile = fopen($file, $Modes) ;
@@ -1323,7 +1325,7 @@ $.fn.extend({
 					
 				if( $.inArray(getExt(filename), FileTypes  )!==-1 || FileTypes.length ==0 ) {
 				
-					$.get("?ReadFile="+dir, function(result){ 
+					$.get("?readfile="+dir, function(result){ 
                      $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ; box-shadow: inset 0 0px 1px rgba(0,0,0,.075);border-top-left-radius: 0px; ">'+escapeTags(result)+'</textarea>'); 
 					});	
 					return;
@@ -1427,7 +1429,7 @@ $.fn.extend({
 	unset($login_pass);
 	unset($is_rtl);
 	unset($units);
-    unset($_SERVER); unset($_SESSION);unset($_COOKIE);
+    unset($_SERVER); unset($_SESSION);unset($_COOKIE);unset($_GET);
 	/*
 	echo  memory_get_usage();
 	$arr = get_defined_vars();
@@ -1436,3 +1438,8 @@ $.fn.extend({
 	print_r($arr);
 	echo '</pre>';*/
 	?>
+<!--<div class="navbar navbar-default  navbar-fixed-bottom" role="navigation">
+    <div class="container text-center">
+        <p class="navbar-text col-md-12 col-sm-12 col-xs-12">&copy; onexite</p>
+    </div>
+    </div>-->
