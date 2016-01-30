@@ -107,7 +107,7 @@ $units = array( 'بايت', 'كيلوبايت', 'ميقابايت', 'جيقاب�
 /*---------------------------english -------------------*/
 
 $lang[0] =  'en';
-$lang[1] =  'Delete';
+$lang[1] =  'Remove';
 $lang[2] =  'Edit';
 $lang[3] =  'Preview';
 $lang[4] =  'home';
@@ -119,7 +119,7 @@ $lang[9] =  'Page';
 $lang[10] =  'Total files';
 $lang[11] =  'File Manager';
 $lang[12] =  'by';
-$lang[13] =  'Are you sure you want to delete this file';
+$lang[13] =  'Are you sure you want to Remove this file';
 $lang[14] =  'Save';
 $lang[15] =  'Cancel';
 $lang[16] =  'Folder';
@@ -207,7 +207,7 @@ if ($res === TRUE) {
 }
 
 
-function unlinkRecursive($dir, $deleteRootToo)
+function unlinkRecursive($dir, $RemoveRootToo)
 {
 	 if (is_file($dir) === true)
      return @unlink($dir);  
@@ -221,7 +221,7 @@ function unlinkRecursive($dir, $deleteRootToo)
         unlinkRecursive($dir.'/'.$obj, true);       
     }
     closedir($dh);
-    if ($deleteRootToo)
+    if ($RemoveRootToo)
      @rmdir($dir);    
     return;
 }
@@ -282,7 +282,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED
 }
 
 
-if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['delete']) || isset($_GET['readfile']) || isset($_GET['newfolder']) )  )
+if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['Remove']) || isset($_GET['read']) || isset($_GET['newfolder']) )  )
 {
   header('Content-Type: application/json');
   die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
@@ -337,18 +337,18 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
-if(isset($_GET['readfile']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['readfile']);if(in_array(extension($_GET['readfile']), $_extensions[1]) || count($_extensions[1])==0 )die( _readfile($_GET['readfile']) ) ; else die($lang[7]);} 
+if(isset($_GET['read']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_GET['read']);if(in_array(extension($_GET['read']), $_extensions[1]) || count($_extensions[1])==0 )die( _read($_GET['read']) ) ; else die($lang[7]);} 
 if(isset($_GET['copy']) && AJAX_request() ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
-if(isset($_GET['delete']) && AJAX_request() ) {file_exists_str($_GET['delete']);@unlinkRecursive($_GET['delete'],true);	} 
+if(isset($_GET['Remove']) && AJAX_request() ) {file_exists_str($_GET['Remove']);@unlinkRecursive($_GET['Remove'],true);	} 
 if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
 if(isset($_GET['rename']) && AJAX_request() ) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
 if(isset($_GET['unzip']) && AJAX_request() ) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
 if(isset($_GET['listFolderFiles'])  && AJAX_request() ) {die(listFolderFiles($directory));} 
 
  if ( isset($_GET['uploadfile']) ) { 
- //&& isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) 
- $response = array();
  
+ $response = array();
+ if (isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) )
  if (is_array($_FILES['inputFileUpload']['name']) || is_object($_FILES['inputFileUpload']['name']))
  foreach($_FILES['inputFileUpload']['name'] as $n => $name) {
 	
@@ -376,7 +376,8 @@ else
  } else $response[] = array( 'code' => '0','status' => $lang[7] );  
 } else $response[] = array( 'code' => '0','status' => $lang[38] );  
 }
- die(json_encode($response));										
+  header('Content-Type: application/json');
+  die(json_encode($response));										
  
 }; //$alert_msg=$lang[38];
 
@@ -530,7 +531,7 @@ if($file=='Match not found' )
 if( $file =='..')
 	return '--'; 
 
-$html= '<a data-toggle="tooltip" title="'.$lang[1].'" onclick="SetDeleteModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="RemoveIcon"></span></a> ';
+$html= '<a data-toggle="tooltip" title="'.$lang[1].'" onclick="SetRemoveModalattr('."'".$directory.'/'.$file.'&dir='.$directory.'&page='.$page."'".'); return false;" href="#"><span class="RemoveIcon"></span></a> ';
 if($show_file_or_dir)
 {
 	if(is_dir($directory.'/'.$file))
@@ -553,7 +554,7 @@ $html.='<a data-toggle="tooltip" title="'.$lang[20].'" onclick="SetRenameModalat
     return $html;
 }
 
-function _readfile($file,$Modes="r")
+function _read($file,$Modes="r")
 {
 global $lang;
 $myfile = fopen($file, $Modes) ;
@@ -790,26 +791,26 @@ td{font-size: 12px;}
 
 
 
-<!-- Modal Delete -->
-<div id="Delete" class="modal fade" role="dialog">
+<!-- Modal Remove -->
+<div id="Remove" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><?php echo $lang[1]; ?> : <code id="DeletefileName"></code></h4>
+        <h4 class="modal-title"><?php echo $lang[1]; ?> : <code id="RemovefileName"></code></h4>
       </div>
       <div class="modal-body">
-	    <input id="Deletedir" type="hidden" >	
-		<input id="DeleteInput" type="hidden" >	
+	    <input id="Removedir" type="hidden" >	
+		<input id="RemoveInput" type="hidden" >	
 		<?php echo $lang[13]; ?>
 
       </div>
      <div class="modal-footer">
 	 
-	    <span id="DeleteLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
-	    <button  type="button" class="btn btn-success" onclick="deleteAndContent()"><?php echo $lang[14]; ?></button>
+	    <span id="RemoveLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
+	    <button  type="button" class="btn btn-success" onclick="RemoveAndContent()"><?php echo $lang[14]; ?></button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
 		 
 	 </div>
@@ -820,7 +821,7 @@ td{font-size: 12px;}
 
 
 
-<!-- Modal Delete -->
+<!-- Modal Remove -->
 <div id="ZipFile" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -1043,6 +1044,7 @@ $.fn.extend({
 		
     $('#FileUploadForm').on('submit',(function(e) {
 		$('#FileUploadLabelsuccess').html('<?php echo $lang[17]; ?>');	 
+		$("#FileUploadBtn").attr("disabled", "disabled");
         e.preventDefault();
         var formData = new FormData(this);
         var dir =$('#UploadFileDir').val();
@@ -1067,7 +1069,7 @@ $.fn.extend({
 				$('#FileUploadLabelsuccess').html('');
 				$('#inputFileUpload').val('');
 				$('#UploadFile').modal('hide');	
-				$("#FileUploadBtn").attr("disabled", "disabled");
+				//$("#FileUploadBtn").attr("disabled", "disabled");
 				getContent("dir="+dir,0)	;
             },
             error: function(data){
@@ -1257,13 +1259,13 @@ $.fn.extend({
 			 
 			  
 			 
-			 function SetDeleteModalattr(dir)
+			 function SetRemoveModalattr(dir)
 			 {
 				dir = replace_dir(dir); 
 	            var filename = SplitFileName(dir.split("&")[0],"/"); 
-				$('#DeleteInput').val(filename);$('#Deletedir').val(dir);$('#DeletefileName').html(filename);
+				$('#RemoveInput').val(filename);$('#Removedir').val(dir);$('#RemovefileName').html(filename);
 				$('#ShowFile').modal('hide');	
-				$('#Delete').modal('show');				
+				$('#Remove').modal('show');				
 			 };
 
 	        function getExt(filename)
@@ -1325,7 +1327,7 @@ $.fn.extend({
 					
 				if( $.inArray(getExt(filename), FileTypes  )!==-1 || FileTypes.length ==0 ) {
 				
-					$.get("?readfile="+dir, function(result){ 
+					$.get("?read="+dir, function(result){ 
                      $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ; box-shadow: inset 0 0px 1px rgba(0,0,0,.075);border-top-left-radius: 0px; ">'+escapeTags(result)+'</textarea>'); 
 					});	
 					return;
@@ -1363,11 +1365,11 @@ $.fn.extend({
 			}
 
 		
-			function deleteAndContent()
+			function RemoveAndContent()
 			{
-			   $('#DeleteLabelsuccess').html('<?php echo $lang[17]; ?>');		
-			   dir = replace_dir($('#Deletedir').val()); 
-			   $.getJSON("?delete="+dir+"&table", function(data){$("#content").html(data.table); $('#alert').html(data.alert);$('#DeleteLabelsuccess').html('');$('#Delete').modal('hide');});					  
+			   $('#RemoveLabelsuccess').html('<?php echo $lang[17]; ?>');		
+			   dir = replace_dir($('#Removedir').val()); 
+			   $.getJSON("?Remove="+dir+"&table", function(data){$("#content").html(data.table); $('#alert').html(data.alert);$('#RemoveLabelsuccess').html('');$('#Remove').modal('hide');});					  
 			}
 			
 			 function copyAndContent() 
