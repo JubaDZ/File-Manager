@@ -42,25 +42,23 @@ $_extensions[1] = array_map('strtolower', $_extensions[1]);
 
 $_maxFileSize   = return_bytes(ini_get('upload_max_filesize'));
 $_extensions[2] = array("gif", "jpg", "jpeg", "png","bmp","ico","tiff","svg"); //images extensions
-$_extensions[3] = array("mp3", "wav", "ogg"); //music extensions
-//$_extensions[4] = array('doc', 'docx', 'docm', 'dot', 'dotx', 'dotm', 'wps','pdf'); //formats doc extensions
 $_extensions[2] = array_map('strtolower', $_extensions[2]);
 $icon[0]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVQ4jbXTsQrCMBAG4AxOgk66ubj5Cg5C3sBX0SVLl3Mp1pb773cQ+jZ9NBcDUmxDg/3hIOSO7yAQ5/6Zsiy3AAoA0q+qqnZJAEARQlg55xzJDoD/3AvJZ+yNARLPfUBENgDMe7/IAQoRWTdNczCz22Tg+21IdpOBoZn5gdTMYFNVT6pKVX1kAWZ2ret6D8CygLZtlwAuAI5ZwFjmBVT1bGb3X58pFslXasmkvAH6z57RLFab2AAAAABJRU5ErkJggg==';
 $icon[1]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVQ4ja3RMQ6CQBAFUBI7o1Za2VhaGrwA8QDexJYCmikIJITkz9/QUNtxCjuPYOI5jJ1igw0RZAmTTDO7efmz6zhjlogsVTUAIM2Oomj9F1DVwPf9eXMOQEg+RGTWCQCQtnmd7laW5WQIEIrIIsuyraqerYE4jlcAwnqVizXQ+85owK9vrNvrDZDcA3Cb5zYJ3DRNd0VRTAF4Q4BDkiQbkldVfQM49QZI3o0xFcmXMab6tm0C+0dU1SPJvAMQks9WYEh9APFSxanQR2QIAAAAAElFTkSuQmCC';
 $icon[2]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4je2TMQoCMRBFdytbQVtbj+ENRFvB1kbYC2w1IARXdmb+YOE1PIKNN/A+sXEhhmRxtfXDNGH+mz8kKYqEAFxUleIC8CCiacrzJlWl1LmZMYBzVVWjlGndTTKzWzB1G4KZeSYiJ+99Gcc+ZqbeVXUTrmZmVwC7j2K/Uuzbtl309vcAGu99KSIHZp4PBojIKryJwYBczx/wI4CIxgDqwYDuiQOonXOTrxMklfvCQTUisox9T0lBs3UzkBOTAAAAAElFTkSuQmCC';
 $icon[3]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4je2SrQ2AQBSD2QBCcOwErAOq4vS1D9RJpmA9FILkOH6CQNCkpkm/VDTLPiHvfUsSEXeXAGY2xnJJM4DiFEASsdw5V5vZElsnaQBQJQEphRByScNjwK73A14ASJrulgEUJPsN0BxcOeUeQPlk+btaAUZIb/PnWjN7AAAAAElFTkSuQmCC';
-$icon[13]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVQ4jWNgGJbAk4GBIQQP9qXUghCaG+DMwMDARa4BzgwMDEYMDAwsSJiRFAM6GRgYYhkYGAKQsBwpBjAxMDCkMDAwcONRQzAMmKCYbAMIAYIGEEpIWZS6YJABAEwKC7pKuYTEAAAAAElFTkSuQmCC';
+$icon[13]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA+0lEQVQ4jZ2SMW7CQBBFjei4QTo6oOYMqXOF1KSMKFJEgsKyJrJ2/t9uI9HQRHLlNjdAnCEKDQUdTeiSbBojWdYabxhpmq8/b79mNkmq8t73ANyq6pOqPqRpepPElnNuQPLdWuvPDeBkjLmLAgAwAH4BzJxzgzzPxyS3AE5RSUgeSL7VNRGZVElmnYDKuKxr3vuetdar6iIKEDJGA0juVPX+asB/k3WWiExI7utnbTbJH2PMSxBA8vnScO2vfAcBqroIvLgC8NnUowFZlg1JrqMAAOZNY0uqr7YdTAPmTUArWy8B4LXjCkcRGbUCiqLoA3gk+dGMTbI8D/8Br0U4Fhi1lKgAAAAASUVORK5CYII=';
 $icon[6]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAd0lEQVQ4jWNgoBXo6+vz7+/vb+jv72+YMGFCVUNDgwhJBkyYMGEyjN3Q0MA3YcKEKoKaYDb29/c3TJw48QAevgNeQwhZQtAVxNCjBgx7AzqhtAM6nZuby97f319NyID5fX19XcjJGJqhGidOnHi1q6tLFa8BpAIAcUCizUwVOu0AAAAASUVORK5CYII=';
 $icon[7]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/ElEQVQ4ja2TPUpDURCFB2wsopVdNuAWYproArKGkM6U0TxIqikeaMi775xTZAXp3nICwdrOBbgAm/sgvN8oDgxc7sz55jCXa/Yf4e53JDcAvJppmg57ASQ37j6o3gNwSd/VWpIkN7XGJjAAj+4+iqK4MjPL81wAnOT7JYC1u99mWXZP8kByBWAba1t3v+4EVHZzBDACMJMUJKW9Ds7qSwCjeH4CsLxoB6U4hPBgZhZCeKyJuwBx8vhM/No2pQYg+VKKAUwkndpc1gAkF+UzAZjE7Te6bARI+gIwl7QjuWpz2QmQ9Angua2nE/DrHpJTkm9Nn6lMkvu+IX+KH1+Xuy051gU6AAAAAElFTkSuQmCC';
-$icon[15]='data:image/gif;base64,R0lGODlhHwAfANUAAP///5qamiYmJuTk5Ly8vMzMzKqqqrCwsKKioujo6NTU1Pb29qioqKCgoK6urtLS0tzc3NjY2Li4uObm5nBwcMbGxmhoaEZGRkhISDIyMvj4+Pr6+lBQUDY2NsTExFZWVpKSkgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAKAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAHwAfAAAG/0CAcEhMPAgOBKDDoQQKxKh0CJEErleAYLu1HDRT6YCALWu5XEolPIwYymY0GmNgAxrwuJybCUcaAHlYZ3sCdxFRA28BgVgHBQMLAAkeIB9ojQYDRGSDAQwKYRsIF4ZlBFR5AJt2a3kQQlZlDBN2QxMMcBKTeaG2Qwp5RnAHv1EHcEdwUMZDBXBIcKzNq3BJcJLUAAtwStrNCNjf3GUIDtLfA9adWMzUz6cPxN/IZQ8JvdTBcAkAsli0jOHSJQSCqmlhNr0awo7RJ19TFORqdAXVEEVZyjyKtG1AgXoZA2iK8oeiKkFZGiCaggelSTiA2LhxidLASjZjBL2siNBOFQ84LyXA+mYEiRJzBO7ZCQIAIfkEAQoAIQAsEAAAAA8ADwAABldAhIPwSISOyGRguZRAAEkkc0oYREPTqSESzU4bXe8ylDEgF4PCYRoSCDCVKEDBCLTdAormasXjD1chFRd+AhaBIQiFAgWBGx+FdoEghRSIHoUciAmFHUEAIfkEAQoAIQAsFgAFAAkAFQAABlnAkDDUiAyHgYBhcEwmCQCh0wkJTRjTgESoyAYSIcAh+xAWsgThIOsQLrKIo1yYENjtHaHnbucIQXwCFCEbH4EBIQiBAgUVF4EWQosHQ3wUGkd2GBVzGQZDQQAh+QQBCgAhACwQABAADwAPAAAGWcCQcChcBI5HBJE4QB4dy2HBGSBEQ4AD9XFVUAOJ6IRBlUQroS+EuEFcBGkkARBKeEAfgR5+NAyEe4F6IQ0RQ4KBGUuIehgGi4gUaJB7FgcaVx0cFAEFV0NBACH5BAEKACEALAUAFgAVAAkAAAZUwJAwVBkajYOjUHBBbJQhgIIROAqugg/IkwgtBoVDYFxdYs+CEHk9DmXQZzWb3DBg4Ff53BAhUvB6awRJQhoHFmiBARIQAFAFARQcHSEIDgQPXUZBACH5BAEKACEALAAAEAAPAA8AAAZZwI5gOEyEjsgjhzj0JJMUpgD0RAakn001VJAKENuQRXqpbA/e0KCqiRJDAYYC8KxghvCA/lAYLJAGGXl6hHpPDYWJTxEGiYRVAwSOAVsAEBKKYSEJDwQOCEEAIfkEAQoAIQAsAAAFAAkAFQAABlnAkNCQERpDFYxAcNRQlkvjAQoVWqiCS6WAFSBCAexnE3pSQUIO1iPsYBPHuBARqNcXQoe9PhAS9gEFQg+ABwAhCYABCkISgAwTIRCKQgB/dkcDBnVyEQ1HQQAh+QQBCgAhACwAAAAADwAPAAAGWMCQcEgsBCicDnGoOVgEUOgyVKFEr0sD5oolZrjdUKQRAkeFA0MgUI5+QJ5ECEBYr8sXxIYIsdupUxJ+AQwTUwmDAQpTIQ+DBwCMdX4FjCEOgwOWCIMLlkEAOw==';
+$icon[15]='data:image/gif;base64,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';
 $icon[12]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVQ4jbXSPUtDMQCF4edKkRaHDv0YBHGXDipIpVC4BVel6C9QkNqpCBZEHHRo6VAQ/cUOjXKVYHMLHsjyJudNSMI/poIjnGC7bPkUb7jEOZbIU8sNLJD94q/YTRHcYj/Cm7hPEbxEdi+eIkmwydx3pqhHeBXPKYIDjCP8Gsfryhn2cIcRdlDDDSZWrxC9nwwPmOMqsA4e8YTDwC4wC2u3ioKu1adJzRC9IsgxKCHo46wI2vgIknzNGOA9dH6klVD+Gq0Sp/07n5Y9F3VkGsILAAAAAElFTkSuQmCC';
 $icon[4]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAe0lEQVQ4je2RsQ2DQBRDPQFCiCpDkawDlamia84+sUTGyGhUFEgHhBNFCiy5seQn63/gLxRjfEpixq+fALbfG/lIsj4ESGIuDyE8bH9y62wPJNtdwJ5IVrYHAEBK6btxg0MXL1j1bgBgezpbJllL6hdAV/DCnmRTsvxazZqvjASHx2bnAAAAAElFTkSuQmCC';
 $icon[11]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA9UlEQVQ4jc2QTUoDQRCFs0jEn7WuFQ8QFx6gNwYXunP0Cq6EgVkI2XQgzIRuut4rG8HaCV7AI7oxYRwSMhACFjRNP977qroGg39XZjbKORcApiSfiqI46B2u6/pUVd9CCFfOuWFKaUzyPcZ41gugqnMzO25rVVWdkPwiOSO5EJHHjQCSsx5NnlNK43Xhl5xzsQ1QluWRqloI4XIlisiE5F3XLCK3qvrtvT9s6865IUlZCQCmZjZaE35V1U8AH13In++SvBGR+7YBwMPv7ZumOReR640TLHegqnMAvnVc5+0BeJKIMV5s29dyEt/LuE+A2wmw9/oBfgaBG4x+og4AAAAASUVORK5CYII=';
 $icon[5]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhUlEQVQ4jWNgoCZoaGgQmTBhQlV/f38DOm5paZEmaMCECROqysrKeNHF+/v7GyZOnPiloaGBB68B/f39DbjEoa67vmrVKmZyDKhuaGjg6+np0ZgwYcJikg1oa2sT7e/vr4Z65QDJBhCtZtSAYWHAhAkT/CZOnDgFW2aC4YkTJ34jZAlJAADcp3JNo6PIZgAAAABJRU5ErkJggg==';
 $icon[10]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA00lEQVQ4jd3PPQrCQBAF4BWE3EFsvMk2Vl7A1t5tLESwscywsO+91ILXsbJPKVjqDYTYpBCJiX+Vr5xhvplx7v9iZgMAO0kXkldJh5TS9OVhSUdJ0cyGIYSM5BhAKWnVCdSbYxNM8hxjHLUCki5mNmzqkdySnLcCJK8hhOxJLwew7rrgQHL8WK+qqidpD2DSCqSUpgBKMxs8DC8lnbz3/VagvmJF8lz/nEvaSzoVRVEB2HQCzjkXYxyRnANYA5h47/sANm8hTblDFt8gC0mzj4Gf5wYc04KjAuZmyQAAAABJRU5ErkJggg==';
-$icon[14]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAwklEQVQ4jb2QPQrCQBCFFyvxBtYKuYOVnZ3nCF7BZpsUG9id96bLDTyDlaWnEGzt0xliJYSwJOvvg9cMzPfejDG/UlEUc5K5iOwBbIwxk+RlAFsAtaq2TwM4VlU1S0oGUJM8O+cya+0UwI5kQ9KPAkjmqto657JeqwPJ2yhARKyqtqnz7wIABJJN93l9k7yGEJZRQGyZ5ElEbNfe+1UUMJTctYjYZECsgYis/wd46YSPnxhCKAHch9IBXMqyXEQB7+gBtIEmVWp3raAAAAAASUVORK5CYII=';
+$icon[14]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABBElEQVQ4jb2QS0rEYBCEcweZx0Z8gXqMceNdRDfjjODSTf6Q/5Gq6oMIgxeYm/g4gQeYEDcTCC4mCYIFvWn666ruLPsPlWV5RXIJYB1jvB4FA7iXVJtZY2aNpJrkw2BnSbWkV+fcJIQwJbmRVA9KQnJpZo1zbtL28jyfmVlDcjUk/trMmhDCtO157+eDF1RVdbsf3uR5PvPez0m+kdyllC4Pwt77C5Jf7fPaIrkDcHcQLorivIUlvaeUbgA8klz1OndhM2sALHpv7cKSPruRJW0HwSGEsxYG8A1gIWlbFMVpLxxjPPntDOBlcHRJz3voAwBHL3DOHZF8SikdZ1mWjXrcX/UDEWLHhXj02aIAAAAASUVORK5CYII=';
 $icon[9]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SMU7DQBBFp+UacACKXMCNJYLCCVxzHDf2CfAqVdaz402NiJK0WRcUuUBAlAEbClJ8CuLIctaS63xpNdJo9Pft7Cc6Kk1TkEeFtcIiyI2BZsbrdqt9c0REI1+TRdBo4xwAIDfm3KSPgEXw9v4BAFiu1tg4BxbxznoJjLXY7z/xXf+cSDTzuUFD0NQkSRDH8a1Yi9/DAVVd46uqAAAzn0GLoF2vZD5HV7nvCX07yJR6ZhFoZmhm5CLIlHoZvAMiuh5PJg9BENyFYXh/nLsZTCDW6iYHLAIuip33miiKHn39dg5cWQIAWGQ2mKCbA1eWF5uDPmXT6aKbgyelFoMN6P/PR51zysEf2/RBFJCWMhsAAAAASUVORK5CYII=';
-$icon[8]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4jWNgGBRA3dxDT8PaL17byjeBGKxh7Revbu6hx8DAwMBg7BLKr2nj32EQVWVgFFyipxdeoqPpk6CqYeGhgA9r2/h1GruE8jNoWHgoaFv5JphPvhBjOfl8gMXkS55mU06qEXK1tpVvgoaFhwLcAMtJ5+wtJp93IBbr2AUmoRhAarhhuGDUAAoMMHYJ5de28esklHDQsZatf7eQijkfAwMDeUlZw9JLl1RX0wYAAO5jdH05wh8NAAAAAElFTkSuQmCC';
+$icon[8]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABB0lEQVQ4je2QMUoDYRCFp8sKtoKkCSkDIUhuoDmABEHRO2wRIhq7qRb+nf3nzbMWBc8QFnKFNLmSjUUSFnIA/eBVj+8xjMg/nVRVdRERDwCeAbyRfEop9U+KTdMMSG5JvpjZWFXPy7LspZRGEbEkuTOzYacM4AbAl6oWIiIRcQegBbB297mIiKoWEfGZc54dyGY2IWlHgy2A6W/a/S4iYGaTgwF3r48G1gCmdV1fkdzsdyTfzWx8cEXOeRYRH2VZ9kRE3H0OoCW5cfdbEZHFYnFG8jvnfN35BzMbktxFxDKlNFLVQlULMxtHxCvJbdM0g055n5RSH8AjyRXJlbvf13V9eVL8o/wAUEaHfPC3QPIAAAAASUVORK5CYII=';
 /*---------------------------arabic -------------------*/
 
 $lang[0] =  'ar';
@@ -243,6 +241,21 @@ function return_bytes ($size_str)
     }
 }
 
+function is_sub_dir($path = NULL, $parent_folder = SITE_PATH) {
+    $dir = dirname($path);
+    $folder = substr($path, strlen($dir));
+    $dir = realpath($dir);
+    $folder = preg_replace('/[^a-z0-9\.\-_]/i', '', $folder);
+    if( !$dir OR !$folder OR $folder === '.') {
+    	return FALSE;
+    }
+    $path = $dir.'/'. $folder;/*DS*/
+    if( strcasecmp($path, $parent_folder) > 0 ) {
+    	return $path;
+    }
+    return FALSE;
+}
+
 function text_position($position=0)
 {
 global $is_rtl;
@@ -257,10 +270,10 @@ function css()
 global $is_rtl;	
 $css='';
 
-if(file_exists('./css/bootstrap.min.css'))
-    $css.='<link href="./css/bootstrap.min.css" rel="stylesheet">';
+if(file_exists('./css/darkly.css'))
+    $css.='<link href="./css/darkly.css" rel="stylesheet">';
 else
-	$css.='<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">';
+	$css.='<link rel="stylesheet" href="//bootswatch.com/darkly/bootstrap.min.css">';
 
 if(file_exists('./js/jquery-2.2.0.min.js'))
 	$css.='<script src="./js/jquery-2.2.0.min.js"></script>';
@@ -318,7 +331,7 @@ if(!Login() && $LoginDialog)
 <meta name="viewport" content="width=device-width, initial-scale=1">
 '.css().'
 <style>
-body {background: #F1F1F1 none repeat scroll 0% 0%;}
+
 .UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 .PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 </style>
@@ -326,7 +339,7 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 <body>
 <div class="container">
  <div class="col-sm-4 col-sm-offset-4" style="margin-top:50px;">
-		<div class="well" style="background-color: #FFF;">
+		<div class="well">
       <legend>'.$lang[22].'</legend>
     <form accept-charset="'.$charset.'" action="" method="post">
 		            <div class="input-group" style="margin-top:10px;">
@@ -446,8 +459,11 @@ if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==
 	if($file !=='..')
 	$total_files++;
 	$files_tmp[]=$file;
-	$times[] = date ("d/m/Y h:i:s A.", @filemtime($file));
+	$times[] = date ("Y-m-d H:i:s", @filemtime($file));
 }
+//arsort($files_tmp);
+//$files = array_keys($files_tmp);
+//array_multisort(array_map('filemtime', $files_tmp ), SORT_DESC, $files_tmp);
 return array( 'list' => $files_tmp ,'times' => $times , 'count' => $total_files );
 }
 
@@ -635,7 +651,7 @@ return $times[$index];
 if(isset($_GET['table']) && AJAX_request() )
 {
 	
-$html='<div class="table-responsive"><table class="table table-hover '.$table_fixed.'"><thead><tr>';
+$html='<div class="well table-responsive"><table class="table table-hover '.$table_fixed.'"><thead><tr>';
 	if($table_fixed=='')
 	$html.='<th class="col-md-4">'.$lang[5].'</th><th class="hidden-xs col-md-2">'.$lang[6].'</th><th class="hidden-xs col-md-2">'.$lang[7].'</th><th class="hidden-xs col-md-2">'.$lang[28].'</th>';
 	else
@@ -648,7 +664,7 @@ foreach($files as $index => $file )
 {
 	$html.='<tr>';
 	if($table_fixed=='')
-	$html.='<td class="col-md-3">'.showfile($file).'</td><td class="hidden-xs col-md-2">'.file_size($file).'</td><td class="hidden-xs col-md-2">'.extension($file).'</td><td class="hidden-xs col-md-2">'.fileTime($index,$file).'</td>';
+	$html.='<td class="col-md-3">'.showfile($file).'</td><td class="hidden-xs col-md-2">'.file_size($file).'</td><td class="hidden-xs col-md-2"><span class="label label-default">'.extension($file).'</span></td><td class="hidden-xs col-md-2">'.fileTime($index,$file).'</td>';
 	else
 	$html.='<td class="col-xs-12 col-sm-5">'.showfile($file).'</td><td class="hidden-xs col-xs-2 col-sm-2 col-md-2">'.file_size($file).'</td><td class="hidden-xs col-xs-2 col-sm-2 col-md-2"><span class="label label-default">'.extension($file).'</span></td>';
 
@@ -661,7 +677,7 @@ if($table_fixed=='')
 $html.='<td colspan="5" class="col-xs-12 col-sm-12 col-md-12">';
 else
 $html.='<td colspan="4" class="col-xs-12 col-sm-12 col-md-12">';	
-$html.=$lang[9].' : <mark>'.$page.'</mark> '.$lang[10].' : <mark>'.$total_files.'</mark></td></tr></tbody></table></div>';
+$html.=$lang[9].' : <span class="text-warning">'.$page.'</span> '.$lang[10].' : <span class="text-warning">'.$total_files.'</span></td></tr></tbody></table></div>';
 if($alert_msg!='') 
 	$alert_msg = alert($alert_msg);
   $response = array( 'table' => $html , 'total' => $total_pages , 'page' => $page , 'dir' => $directory , 'dirHtml' => GetOldirectory() ,'alert' => $alert_msg);
@@ -712,10 +728,9 @@ unset($alert_msg);
 .UserIcon{background:url( <?php echo $icon[12];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 .LogoutIcon{background:url(  <?php echo $icon[13];?>) no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
 
-.table,.breadcrumb,.navbar-default{border: 1px solid #D8D8D8;background: #fff none repeat scroll 0% 0%;}
-.container_01{border: 1px solid #D8D8D8;background: #fff none repeat scroll 0% 0%;padding: 25px;margin-bottom:20px;}
+.container_01{border: 1px solid transparent;background:#303030 none repeat scroll 0% 0%;padding: 25px;margin-bottom:20px;border-radius: 4px;}
 .Loading{background:url(<?php echo $icon[15];?>) no-repeat center center; padding: 25px ;}
-body {background: #F1F1F1 none repeat scroll 0% 0%;margin-bottom:20px;}
+
 td{font-size: 12px;}
 .pagination { margin:0px;}
 .table-fixed { border-top: 0px ;}
@@ -727,7 +742,7 @@ td{font-size: 12px;}
 .btn-file input[type=file] {position: absolute;top: 0;right: 0;min-width: 100%;min-height: 100%;font-size: 100px;text-align: right;filter: alpha(opacity=0);opacity: 0;outline: none; background: white;cursor: inherit;display: block;}
 .navbar-brand {font-size: 14px;}
 
-.treeview, .treeview ul {margin:0;padding:0;list-style:none;color: #D8D8D8;}
+.treeview, .treeview ul {margin:0;padding:0;list-style:none;color:#0ce3ac;}
 .treeview ul { margin-left:1em;position:relative}
 .treeview ul ul {margin-left:.5em}
 
@@ -757,7 +772,7 @@ td{font-size: 12px;}
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 		</button>
-      <a class="navbar-brand" href="">  <span class="ExplorIcon" ></span>  <?php echo $lang[11].'<span class="hidden-xs"> , '.$lang[12].'  '. base64_decode('PGNvZGU+b25leGl0ZTwvY29kZT4=') . '  '?></span></a>
+      <a class="navbar-brand" href="">  <span class="ExplorIcon" ></span>  <?php echo $lang[11].'<span class="hidden-xs"> , '.$lang[12].'  '. base64_decode('PHNwYW4gY2xhc3M9InRleHQtd2FybmluZyI+b25leGl0ZTwvc3Bhbj4=') . '  '?></span></a>
     </div>
      
 	  
@@ -804,7 +819,7 @@ td{font-size: 12px;}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><?php echo $lang[20]; ?> : <code id="RenamefileName"></code></h4>
+        <h4 class="modal-title"><?php echo $lang[20]; ?> : <span class="text-warning" id="RenamefileName"></span></h4>
       </div>
       <div class="modal-body">
 	    <input id="renameDir" type="hidden" >	
@@ -834,7 +849,7 @@ td{font-size: 12px;}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><?php echo $lang[1]; ?> : <code id="RemovefileName"></code></h4>
+        <h4 class="modal-title"><?php echo $lang[1]; ?> : <span class="text-warning" id="RemovefileName"></span></h4>
       </div>
       <div class="modal-body">
 	    <input id="Removedir" type="hidden" >	
@@ -864,7 +879,7 @@ td{font-size: 12px;}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><?php echo $lang[41]; ?> : <code id="ZipfileName"></code></h4>
+        <h4 class="modal-title"><?php echo $lang[41]; ?> : <span class="text-warning" id="ZipfileName"></span></h4>
       </div>
       <div class="modal-body">
 	    <input id="Zipdir" type="hidden" >	
@@ -951,9 +966,9 @@ td{font-size: 12px;}
 		
       </div>
       <div class="modal-body">
-	  <p><?php echo $lang[36] .' : <code>{ '.implode(",",$_extensions[0]).' }</code> <br> 
-	  '.$lang[37].' : <code id="maxFileSize">'.$_maxFileSize.'</code>'; ?> <br>
-	  <?php echo $lang[6] ?> : <code><span id="UploadFileSize"></span></code></p>
+	  <p><?php echo $lang[36] .' : <span class="text-warning">{ '.implode(",",$_extensions[0]).' }</span> <br> 
+	  '.$lang[37].' : <span class="text-warning" id="maxFileSize">'.$_maxFileSize.'</span>'; ?> <br>
+	  <?php echo $lang[6] ?> : <span class="text-warning"><span id="UploadFileSize"></span></span></p>
 	<form  id="FileUploadForm" enctype="multipart/form-data" method="post">
 	    <input id="UploadFileDir" type="hidden" >	
 
@@ -989,7 +1004,7 @@ td{font-size: 12px;}
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><?php echo $lang[3] ;?> <code id="imgUrl"></code></h4>
+          <h4 class="modal-title"><?php echo $lang[3] ;?> <span class="text-warning" id="imgUrl"></span></h4>
         </div>
         <div class="modal-body">
 		  <input id="filenameDir" type="hidden" >	
@@ -1032,7 +1047,7 @@ td{font-size: 12px;}
 		<div id="content"></div>		  
 		<input type="hidden" id="directory">		
 		 <div id="alert"></div>
-		 <ul id="pagination" class="pagination"></ul>
+		 <ul id="pagination" class="pagination-sm"></ul>
         <script type="text/javascript">
 		
 /**
@@ -1293,6 +1308,7 @@ $.fn.extend({
 			 {
 				dir = $('#directory').val();
 				dir = replace_dir(dir); 
+				$("#UploadFileSize").html('');	
 				$('#UploadFileDir').val(dir);
 				$('#inputFileUpload').val('');
 				$('#ShowFile').modal('hide');	
