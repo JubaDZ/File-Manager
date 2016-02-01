@@ -32,14 +32,13 @@ $lang[0] =  'en';
 ScreenShot
 --------
 #### **Small devices**
-
 ![ScreenShot](https://github.com/onexite/File-Manager/blob/master/images/File%20Manager%20001.png)
 
-
 #### **Medium and large devices**
-
 ![ScreenShot](https://github.com/onexite/File-Manager/blob/master/images/File%20Manager%20002.png)
 
+#### **Darkly theme**
+![ScreenShot](https://github.com/onexite/File-Manager/blob/master/images/File%20Manager%20003.png)
 Download
 --------
 ##### [Click here to download latest version](https://github.com/onexite/File-Manager/archive/master.zip)
