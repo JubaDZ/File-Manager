@@ -58,7 +58,7 @@ $icon[5]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA
 $icon[10]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA00lEQVQ4jd3PPQrCQBAF4BWE3EFsvMk2Vl7A1t5tLESwscywsO+91ILXsbJPKVjqDYTYpBCJiX+Vr5xhvplx7v9iZgMAO0kXkldJh5TS9OVhSUdJ0cyGIYSM5BhAKWnVCdSbYxNM8hxjHLUCki5mNmzqkdySnLcCJK8hhOxJLwew7rrgQHL8WK+qqidpD2DSCqSUpgBKMxs8DC8lnbz3/VagvmJF8lz/nEvaSzoVRVEB2HQCzjkXYxyRnANYA5h47/sANm8hTblDFt8gC0mzj4Gf5wYc04KjAuZmyQAAAABJRU5ErkJggg==';
 $icon[14]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABBElEQVQ4jb2QS0rEYBCEcweZx0Z8gXqMceNdRDfjjODSTf6Q/5Gq6oMIgxeYm/g4gQeYEDcTCC4mCYIFvWn666ruLPsPlWV5RXIJYB1jvB4FA7iXVJtZY2aNpJrkw2BnSbWkV+fcJIQwJbmRVA9KQnJpZo1zbtL28jyfmVlDcjUk/trMmhDCtO157+eDF1RVdbsf3uR5PvPez0m+kdyllC4Pwt77C5Jf7fPaIrkDcHcQLorivIUlvaeUbgA8klz1OndhM2sALHpv7cKSPruRJW0HwSGEsxYG8A1gIWlbFMVpLxxjPPntDOBlcHRJz3voAwBHL3DOHZF8SikdZ1mWjXrcX/UDEWLHhXj02aIAAAAASUVORK5CYII=';
 $icon[9]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SMU7DQBBFp+UacACKXMCNJYLCCVxzHDf2CfAqVdaz402NiJK0WRcUuUBAlAEbClJ8CuLIctaS63xpNdJo9Pft7Cc6Kk1TkEeFtcIiyI2BZsbrdqt9c0REI1+TRdBo4xwAIDfm3KSPgEXw9v4BAFiu1tg4BxbxznoJjLXY7z/xXf+cSDTzuUFD0NQkSRDH8a1Yi9/DAVVd46uqAAAzn0GLoF2vZD5HV7nvCX07yJR6ZhFoZmhm5CLIlHoZvAMiuh5PJg9BENyFYXh/nLsZTCDW6iYHLAIuip33miiKHn39dg5cWQIAWGQ2mKCbA1eWF5uDPmXT6aKbgyelFoMN6P/PR51zysEf2/RBFJCWMhsAAAAASUVORK5CYII=';
-$icon[8]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABB0lEQVQ4je2QMUoDYRCFp8sKtoKkCSkDIUhuoDmABEHRO2wRIhq7qRb+nf3nzbMWBc8QFnKFNLmSjUUSFnIA/eBVj+8xjMg/nVRVdRERDwCeAbyRfEop9U+KTdMMSG5JvpjZWFXPy7LspZRGEbEkuTOzYacM4AbAl6oWIiIRcQegBbB297mIiKoWEfGZc54dyGY2IWlHgy2A6W/a/S4iYGaTgwF3r48G1gCmdV1fkdzsdyTfzWx8cEXOeRYRH2VZ9kRE3H0OoCW5cfdbEZHFYnFG8jvnfN35BzMbktxFxDKlNFLVQlULMxtHxCvJbdM0g055n5RSH8AjyRXJlbvf13V9eVL8o/wAUEaHfPC3QPIAAAAASUVORK5CYII=';
+$icon[8]='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAlElEQVQ4jWNgoCZoaGgQmTBhQlV/f38DOm5paZEmaMCECROqysrKeNHF+/v7GyZOnPiloaGBB68B/f39DTAaCTv09/c3QF13fdWqVcwEDcAiXt3Q0MDX09OjMWHChMUku6CtrU20v7+/GuqVA6QagOEdkr1AtBqquWDUCxR4YcKECX4TJ06cgscFDRMnTvxGyBKSAADats4cMtUnDAAAAABJRU5ErkJggg==';
 /*---------------------------arabic -------------------*/
 
 $lang[0] =  'ar';
@@ -104,6 +104,7 @@ $lang[39] =  'المجلدات الشجرية';
 $lang[40] =  'نسخ الى';
 $lang[41] =  'فك الضغط';
 $lang[42] =  'معلومات';
+$lang[43] =  'فارغ';
 $units = array( 'بايت', 'كيلوبايت', 'ميقابايت', 'جيقابايت', 'تيرابايت', 'بيتابايت', 'اكسابايت', 'زيتابايت', 'يوتابيت');
 
 /*---------------------------english -------------------*/
@@ -151,7 +152,7 @@ $lang[39] =  'Tree View';
 $lang[40] =  'Copy to';
 $lang[41] =  'UnZip file';
 $lang[42] =  'Information';
-
+$lang[43] =  'Empty';
 $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
 /*----------------------------------------------*/
@@ -379,6 +380,12 @@ if(isset($_GET['read']) && $show_file_or_dir && AJAX_request() ) {file_exists_st
 		die( _read($_GET['read']) ) ; 
 	}   else die($lang[7]);} 
 	
+if(isset($_GET['write']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_POST['write']);if(in_array(extension($_POST['write']), $_extensions[1]) || count($_extensions[1])==0 )
+	{   header('Content-type: text/html; charset='.$charset);
+        $txtData = (isset($_POST['txt'])) ? $_POST['txt'] : '';
+		die( _write($_POST['write'],$txtData) ) ; 
+	}   else die($lang[7]);} 
+	
  if ( isset($_GET['uploadfile']) ) { 
  
  $response = array();
@@ -459,7 +466,7 @@ if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==
 	if($file !=='..')
 	$total_files++;
 	$files_tmp[]=$file;
-	$times[] = date ("Y-m-d H:i:s", @filemtime($file));
+	$times[] = date ("d/m/Y h:i:s A.", @filemtime($file));
 }
 //arsort($files_tmp);
 //$files = array_keys($files_tmp);
@@ -612,6 +619,28 @@ $myfile = fopen($file, $Modes) ;
 if(!$myfile) return $lang[21]; //w
 return fread($myfile, $file_size );
 fclose($myfile);
+};
+
+
+function _write($file,$txt='',$Modes="w")
+{
+global $lang;
+
+if(file_exists($file) && $txt=='') return $lang[43];
+
+if( file_exists($file) && ( !filesize($file) || !is_readable($file) ) ) return $lang[21];
+
+$myfile = fopen($file, $Modes) ;
+if(!$myfile) return $lang[21]; //w
+if ( fwrite($myfile, $txt) )
+{
+fclose($myfile);
+return 	$lang[34];
+}	else {
+	fclose($myfile);
+    return 	$lang[33];
+}
+
 };
 
 function GetOldirectory()
@@ -1033,7 +1062,9 @@ td{font-size: 12px;}
 		
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
+          <span id="FileWriteLabelsuccess" class="label label-success pull-<?php text_position(1);?>"></span> 
+          <button type="button" class="btn btn-success"  id="FileWriteBtn" onclick="writeAndContent()" ><?php echo $lang[14]; ?></button> 
+		  <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lang[15]; ?></button>
         </div>
       </div>
       
@@ -1048,7 +1079,7 @@ td{font-size: 12px;}
 		<input type="hidden" id="directory">		
 		 <div id="alert"></div>
 		 <ul id="pagination" class="pagination-sm"></ul>
-        <script type="text/javascript">
+            <script type="text/javascript">
 		
 /**
  *  BootTree Treeview plugin for Bootstrap.
@@ -1308,7 +1339,6 @@ $.fn.extend({
 			 {
 				dir = $('#directory').val();
 				dir = replace_dir(dir); 
-				$("#UploadFileSize").html('');	
 				$('#UploadFileDir').val(dir);
 				$('#inputFileUpload').val('');
 				$('#ShowFile').modal('hide');	
@@ -1371,14 +1401,14 @@ $.fn.extend({
 	
 			  function SetShowFileModalattr(dir)
 			 {
-				 
+				 $("#FileWriteBtn").hide();
 				 dir = replace_dir(dir); 
 				 if (dir.indexOf("#") !=-1) 
 					 var filename = SplitFileName(dir,"#");
 				 else
 					 var filename = SplitFileName(dir,"/");
 
-
+                $('#filenameInput').val(filename);
 				// var dir = file_name_array[file_name_array.length - 2];
 				$('.nav-tabs a[href="#_browse"').tab('show');
 				$("#listFolderFiles").html('');
@@ -1386,7 +1416,7 @@ $.fn.extend({
 				$("#HrefTree").html('');
 			
 				$("#Result").html('<center><br><br><span class="Loading"></span><br><br><?php echo $lang[35]?></center>');
-	            $('#filenameInput').val(filename);$('#filenameDir').val(dir);$('#imgUrl').html(filename);
+	            $('#filenameDir').val(dir);$('#imgUrl').html(filename);
 				$('#ShowFile').modal('show');	
 				
 			if(filename =='directory'){
@@ -1415,7 +1445,10 @@ $.fn.extend({
 				if( $.inArray(getExt(filename), FileTypes  )!==-1 || FileTypes.length ==0 ) {
 				
 					$.get("?read="+dir, function(result){ 
-                     $("#Result").html('<textarea class="form-control" rows="15" style="border-top: 0px ; box-shadow: inset 0 0px 1px rgba(0,0,0,.075);border-top-left-radius: 0px; ">'+escapeTags(result)+'</textarea>'); 
+					 $("#FileWriteBtn").show();
+					 $('#FileWriteLabelsuccess').html('');
+                     $("#FileWriteBtn").removeAttr("disabled");
+                     $("#Result").html('<input id="FileTxt_OK" type="hidden" ><textarea id="FileTxt" class="form-control" rows="15" style="border-top: 0px ; box-shadow: inset 0 0px 1px rgba(0,0,0,.075);border-top-left-radius: 0px; ">'+escapeTags(result)+'</textarea>'); 
 					});	
 					return;
 				};
@@ -1423,6 +1456,36 @@ $.fn.extend({
 					
 						
 			 };
+			 
+			 
+			 
+			 function writeAndContent() 
+			 { 
+			 
+			  if( !$('#FileTxt_OK').length ) {$("#FileWriteBtn").attr("disabled", "disabled"); $('#FileWriteLabelsuccess').html('<?php echo $lang[33]?>'); return ;}
+			 
+			 
+			   $("#FileTxt").attr("disabled", "disabled"); $("#FileWriteBtn").attr("disabled", "disabled");
+			   $('#FileWriteLabelsuccess').html('<?php echo $lang[17]; ?>');		
+			   dir = replace_dir($('#filenameInput').val()); 
+			   txtData = $('#FileTxt').val();
+
+			   $.post( "?write", { write: dir, txt: txtData } , function( data,status ) {
+              
+			  if(status=='success'){
+				$('#ShowFile').modal('hide'); 
+				$('#FileWriteLabelsuccess').html('');
+				$('#FileTxt').val('');
+			  } else 
+				$('#FileWriteLabelsuccess').html('<?php echo $lang[33]?>');
+			
+                $("#FileTxt").removeAttr("disabled"); $("#FileWriteBtn").removeAttr("disabled");
+		       
+			   delete txtData; 
+
+			   });
+		
+             };
 			 
 			 
 			 function renameAndContent() 
