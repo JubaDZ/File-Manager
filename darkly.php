@@ -381,7 +381,7 @@ if(isset($_GET['read']) && $show_file_or_dir && AJAX_request() ) {file_exists_st
 	}   else die($lang[7]);} 
 	
 if(isset($_GET['write']) && $show_file_or_dir && AJAX_request() ) {file_exists_str($_POST['write']);if(in_array(extension($_POST['write']), $_extensions[1]) || count($_extensions[1])==0 )
-	{   header('Content-type: text/html; charset='.$charset);
+	{   //header('Content-type: text/html; charset='.$charset);
         $txtData = (isset($_POST['txt'])) ? $_POST['txt'] : '';
 		die( _write($_POST['write'],$txtData) ) ; 
 	}   else die($lang[7]);} 
@@ -631,15 +631,15 @@ if(file_exists($file) && $txt=='') return $lang[43];
 if( file_exists($file) && ( !filesize($file) || !is_readable($file) ) ) return $lang[21];
 
 $myfile = fopen($file, $Modes) ;
-if(!$myfile) return $lang[21]; //w
-if ( fwrite($myfile, $txt) )
+if(!$myfile) return $lang[21]; 
+if ( fwrite($myfile, $txt ) )
 {
 fclose($myfile);
-return 	$lang[34];
+return $lang[34];
 }	else {
-	fclose($myfile);
-    return 	$lang[33];
-}
+	     fclose($myfile);
+         return $lang[33];
+         }
 
 };
 
@@ -1467,7 +1467,7 @@ $.fn.extend({
 			 
 			   $("#FileTxt").attr("disabled", "disabled"); $("#FileWriteBtn").attr("disabled", "disabled");
 			   $('#FileWriteLabelsuccess').html('<?php echo $lang[17]; ?>');		
-			   dir = replace_dir($('#filenameInput').val()); 
+			   dir = replace_dir($('#filenameDir').val()); 
 			   txtData = $('#FileTxt').val();
 
 			   $.post( "?write", { write: dir, txt: txtData } , function( data,status ) {

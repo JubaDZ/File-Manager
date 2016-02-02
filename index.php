@@ -631,14 +631,14 @@ if( file_exists($file) && ( !filesize($file) || !is_readable($file) ) ) return $
 
 $myfile = fopen($file, $Modes) ;
 if(!$myfile) return $lang[21]; //w
-if ( fwrite($myfile, $txt) )
+if ( fwrite($myfile, $txt ) )
 {
 fclose($myfile);
-return 	$lang[34];
+return $lang[34];
 }	else {
-	fclose($myfile);
-    return 	$lang[33];
-}
+	     fclose($myfile);
+         return $lang[33];
+         }
 
 };
 
@@ -1467,7 +1467,7 @@ $.fn.extend({
 			 
 			   $("#FileTxt").attr("disabled", "disabled"); $("#FileWriteBtn").attr("disabled", "disabled");
 			   $('#FileWriteLabelsuccess').html('<?php echo $lang[17]; ?>');		
-			   dir = replace_dir($('#filenameInput').val()); 
+			   dir = replace_dir($('#filenameDir').val()); 
 			   txtData = $('#FileTxt').val();
 
 			   $.post( "?write", { write: dir, txt: txtData } , function( data,status ) {
