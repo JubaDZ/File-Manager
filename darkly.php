@@ -171,14 +171,20 @@ function Login()
 		return true; else return false;	
 	}  else return false;	
 	
-}
+};
 
 function recurse_copy($src,$dst) { 
- if (is_file($src) === true)
-     return @copy($src,$dst); 
+ if ( is_file($src) )
+ {
+	 $_DIRNAME = pathinfo($dst, PATHINFO_DIRNAME);
+     if(!file_exists($_DIRNAME))
+        @mkdir($_DIRNAME, 0777, true); 
+    return @copy($src,$dst); 
+ }
+     
     $dir = opendir($src); 
 	if(!file_exists($dst))
-    @mkdir($dst); 
+       @mkdir($dst, 0777, true); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
@@ -190,12 +196,12 @@ function recurse_copy($src,$dst) {
         } 
     } 
     closedir($dir); 
-} 
+} ;
 function openZipArchive($file,$extract_path)
 {
 	global $alert_msg,$lang;
 	if(!file_exists($extract_path))
-    @mkdir($extract_path); 
+    @mkdir($extract_path, 0777, true); 
 
 $zip = new ZipArchive;
 $res = $zip->open($file);
@@ -207,7 +213,7 @@ if ($res === TRUE) {
   $alert_msg=$lang[33].' - '.$lang[41];
   return false;
 }	
-}
+};
 
 
 function unlinkRecursive($dir, $RemoveRootToo)
@@ -227,7 +233,7 @@ function unlinkRecursive($dir, $RemoveRootToo)
     if ($RemoveRootToo)
      @rmdir($dir);    
     return;
-}
+};
 
 
 
@@ -240,7 +246,7 @@ function return_bytes ($size_str)
         case 'G': case 'g': return (int)$size_str * 1073741824;
         default: return $size_str;
     }
-}
+};
 
 function is_sub_dir($path = NULL, $parent_folder = SITE_PATH) {
     $dir = dirname($path);
@@ -255,7 +261,7 @@ function is_sub_dir($path = NULL, $parent_folder = SITE_PATH) {
     	return $path;
     }
     return FALSE;
-}
+};
 
 function text_position($position=0)
 {
@@ -264,7 +270,7 @@ if($position==0)
 {if($is_rtl ) echo 'left'; else echo 'right';}
 else
 {if($is_rtl ) echo 'right'; else echo 'left';}	
-}
+};
 
 function css()
 {  
@@ -299,25 +305,25 @@ else
          	
 	return $css;
 
-} 	
+} 	;
 function alert($str)
 {
 	global $lang;
 	return '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>'.$lang[33].'!</strong> '.$str.'</div>';
-}
+};
 
 function  AJAX_request()
 {
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
 	return true ; else return false; 
-}
+};
 
 
 if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['Remove']) || isset($_GET['read']) || isset($_GET['newfolder']) )  )
 {
   header("Content-type: application/json; charset=".$charset);
   die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
-}
+};
 
 
 if(!Login() && $LoginDialog)
@@ -362,7 +368,7 @@ if(!Login() && $LoginDialog)
 
 </body>
 </html>');
-}
+};
 
 
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;

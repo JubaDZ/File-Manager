@@ -177,11 +177,17 @@ function Login()
 }
 
 function recurse_copy($src,$dst) { 
- if (is_file($src) === true)
-     return @copy($src,$dst); 
+ if ( is_file($src) )
+ {
+	 $_DIRNAME = pathinfo($dst, PATHINFO_DIRNAME);
+     if(!file_exists($_DIRNAME))
+        @mkdir($_DIRNAME, 0777, true); 
+    return @copy($src,$dst); 
+ }
+     
     $dir = opendir($src); 
 	if(!file_exists($dst))
-    @mkdir($dst); 
+       @mkdir($dst, 0777, true); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
@@ -198,7 +204,7 @@ function openZipArchive($file,$extract_path)
 {
 	global $alert_msg,$lang;
 	if(!file_exists($extract_path))
-    @mkdir($extract_path); 
+    @mkdir($extract_path, 0777, true); 
 
 $zip = new ZipArchive;
 $res = $zip->open($file);
@@ -371,9 +377,9 @@ $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 if(!($page>0)) $page = 1;
 $directory = (isset($_GET['dir'])) ? $_GET['dir'] : '.';
 
-if(isset($_GET['copy']) && AJAX_request() ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
+if(isset($_GET['copy']) /*&& AJAX_request()*/ ) {file_exists_str($_GET['copy']); recurse_copy( $_GET['copy'],$_GET['to'] );  } 
 if(isset($_GET['Remove']) && AJAX_request() ) {file_exists_str($_GET['Remove']);@unlinkRecursive($_GET['Remove'],true);	} 
-if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777);	} 
+if(isset($_GET['newfolder']) && AJAX_request() ) {@mkdir(  $directory .'/'.$_GET['newfolder'] , 0777, true);	} 
 if(isset($_GET['rename']) && AJAX_request() ) {file_exists_str($_GET['rename']);@rename($_GET['rename'],$directory .'/'.$_GET['newrename']);} 
 if(isset($_GET['unzip']) && AJAX_request() ) {file_exists_str($_GET['unzip']);@openZipArchive($_GET['unzip'],$_GET['to']);} 
 if(isset($_GET['listFolderFiles'])  && AJAX_request() ) {die(listFolderFiles($directory));} 
