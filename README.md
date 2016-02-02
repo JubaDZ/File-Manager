@@ -7,6 +7,7 @@ Features
 * Ajax File Manager ( browse , `Pagination` )
 * Ajax Milti File `uploader`
 * `Rename` and `Delete`  and `Copy` (files & folders)
+* `Read` and `Write` files
 * `Unzip` archive
 * `Create` folder
 * Tree view
