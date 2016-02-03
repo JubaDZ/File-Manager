@@ -4,7 +4,7 @@ ini_set("display_errors", 1);
 date_default_timezone_set('UTC'); 
 
 $LoginDialog      = true;
-$login_user       = 'admin';
+$login_user       = '';
 $login_pass       = 'admin';
 $charset          = 'utf-8';
 $show_file_or_dir = true ; // can show directory
@@ -176,6 +176,13 @@ function Login()
 	
 }
 
+function print_array($array)
+{
+	global $charset;
+	header("Content-type: application/json; charset=".$charset);
+	return json_encode($array);
+}
+
 function recurse_copy($src,$dst) { 
  if ( is_file($src) )
  {
@@ -323,13 +330,20 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED
 
 if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['listFolderFiles']) || isset($_GET['copy']) || isset($_GET['unzip']) || isset($_GET['table']) || isset($_GET['rename']) || isset($_GET['Remove']) || isset($_GET['read']) || isset($_GET['newfolder']) )  )
 {
-  header("Content-type: application/json; charset=".$charset);
-  die(json_encode(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
+
+  die(print_array(array( 'table' => '<div class="container_01"><center>'.$lang[31].'</center></div>' , 'total' => 1 , 'page' => 1, 'dir' => '' , 'dirHtml' => '' ,'alert' => alert($lang[22])  )));
 }
 
 
 if(!Login() && $LoginDialog)
 {
+	if($login_user=='')
+		$html_input_user='<input name="username" value="" type="hidden" >';
+	else
+		$html_input_user='<div class="input-group" style="margin-top:10px;">
+                           <span class="input-group-addon"><i class="UserIcon"></i></span>
+                           <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
+                         </div>';
 	die('<!DOCTYPE html>
 <html>
 <head>
@@ -341,8 +355,8 @@ if(!Login() && $LoginDialog)
 '.css().'
 <style>
 body {background: #F1F1F1 none repeat scroll 0% 0%;}
-.UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+.UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 20px;}
+.PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 20px;}
 </style>
 </head>
 <body>
@@ -350,12 +364,8 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
  <div class="col-sm-4 col-sm-offset-4" style="margin-top:50px;">
 		<div class="well" style="background-color: #FFF;">
       <legend>'.$lang[22].'</legend>
-    <form accept-charset="'.$charset.'" action="" method="post">
-		            <div class="input-group" style="margin-top:10px;">
-                        <span class="input-group-addon"><i class="UserIcon"></i></span>
-                        <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
-                    </div>
-
+    <form accept-charset="'.$charset.'" action="" method="post">'.$html_input_user.'
+		          
                     <div class="input-group" style="margin-top:10px;">
                         <span class="input-group-addon"><i class="PassIcon"></i></span>
                         <input id="password" type="password" class="form-control" name="password" placeholder="'.$lang[25].'">
@@ -395,7 +405,7 @@ if(isset($_GET['write']) && $show_file_or_dir && AJAX_request() ) {file_exists_s
 		die( _write($_POST['write'],$txtData) ) ; 
 	}   else die($lang[7]);} 
 	
- if ( isset($_GET['uploadfile']) ) { 
+ if ( isset($_GET['uploadfile']) && AJAX_request() ) { 
  
  $response = array();
  if (isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) )
@@ -426,8 +436,8 @@ else
  } else $response[] = array( 'code' => '0','status' => $lang[7] );  
 } else $response[] = array( 'code' => '0','status' => $lang[38] );  
 }
-  header("Content-type: application/json; charset=".$charset);
-  die(json_encode($response));										
+
+  die(print_array($response));										
  
 }; //$alert_msg=$lang[38];
 
@@ -716,8 +726,7 @@ if($alert_msg!='')
 	$alert_msg = alert($alert_msg);
   $response = array( 'table' => $html , 'total' => $total_pages , 'page' => $page , 'dir' => $directory , 'dirHtml' => GetOldirectory() ,'alert' => $alert_msg);
   unset($html); 
-  header("Content-type: application/json; charset=".$charset);
-  die(json_encode($response));
+  die(print_array($response));
   
 }
 

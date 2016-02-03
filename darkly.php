@@ -326,8 +326,16 @@ if(!Login() && $LoginDialog && ( isset($_GET['uploadfile']) || isset($_GET['list
 };
 
 
+
 if(!Login() && $LoginDialog)
 {
+	if($login_user=='')
+		$html_input_user='<input name="username" value="" type="hidden" >';
+	else
+		$html_input_user='<div class="input-group" style="margin-top:10px;">
+                           <span class="input-group-addon"><i class="UserIcon"></i></span>
+                           <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
+                         </div>';
 	die('<!DOCTYPE html>
 <html>
 <head>
@@ -338,22 +346,18 @@ if(!Login() && $LoginDialog)
 <meta name="viewport" content="width=device-width, initial-scale=1">
 '.css().'
 <style>
-
-.UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
-.PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 25px;margin-left: 5px;}
+body {background: #F1F1F1 none repeat scroll 0% 0%;}
+.UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 20px;}
+.PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 20px;}
 </style>
 </head>
 <body>
 <div class="container">
  <div class="col-sm-4 col-sm-offset-4" style="margin-top:50px;">
-		<div class="well">
+		<div class="well" style="background-color: #FFF;">
       <legend>'.$lang[22].'</legend>
-    <form accept-charset="'.$charset.'" action="" method="post">
-		            <div class="input-group" style="margin-top:10px;">
-                        <span class="input-group-addon"><i class="UserIcon"></i></span>
-                        <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
-                    </div>
-
+    <form accept-charset="'.$charset.'" action="" method="post">'.$html_input_user.'
+		          
                     <div class="input-group" style="margin-top:10px;">
                         <span class="input-group-addon"><i class="PassIcon"></i></span>
                         <input id="password" type="password" class="form-control" name="password" placeholder="'.$lang[25].'">
@@ -368,7 +372,8 @@ if(!Login() && $LoginDialog)
 
 </body>
 </html>');
-};
+}
+
 
 
 $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -392,7 +397,7 @@ if(isset($_GET['write']) && $show_file_or_dir && AJAX_request() ) {file_exists_s
 		die( _write($_POST['write'],$txtData) ) ; 
 	}   else die($lang[7]);} 
 	
- if ( isset($_GET['uploadfile']) ) { 
+ if ( isset($_GET['uploadfile']) && AJAX_request() ) { 
  
  $response = array();
  if (isset( $_FILES["inputFileUpload"] ) && !empty( $_FILES["inputFileUpload"]["name"] ) )
