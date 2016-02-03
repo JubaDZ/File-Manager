@@ -344,7 +344,7 @@ if(!Login() && $LoginDialog)
                            <span class="input-group-addon"><i class="UserIcon"></i></span>
                            <input id="user" type="text" class="form-control" name="username" value="" placeholder="'.$lang[24].'">                                        
                          </div>';
-	die('<!DOCTYPE html>
+echo ('<!DOCTYPE html>
 <html>
 <head>
 <title>'.$lang[22].'</title>
@@ -380,6 +380,20 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 
 </body>
 </html>');
+	unset($lang);
+	unset($icon);
+	unset($_extensions);
+    unset($RTL_languages);
+	unset($LoginDialog);
+	unset($login_user);
+	unset($login_pass);
+	unset($is_rtl);
+	unset($units);
+	unset($charset);
+	unset($_maxFileSize);
+    unset($_SERVER); unset($_SESSION);unset($_COOKIE);unset($_GET);  unset($_POST);unset($_FILES);unset($_ENV); unset($_REQUEST); 
+
+exit();
 }
 
 
@@ -528,7 +542,7 @@ $total_files = 1;
 if (in_array($_GET['search'], $FilesArray['list']))  
   $files[0] = $_GET['search']; 
 else 
-  $files[0] = 'Match not found';
+  $files[0] = 'Match_not_found';
 }
 if($table_fixed=='')
 $total_pages = ceil($total_files/$perpage);
@@ -548,7 +562,7 @@ global $directory,$_extensions,$lang;
 if($file=='.' )		
 	return '<a href="?" onclick="getContent('."'dir=".$directory.'/'.$file."'".',0); return false;"><strong>'.$file.'</strong></a>';
 
-elseif($file=='Match not found')
+elseif($file=='Match_not_found')
     return '<span class="ExplorIcon">'.$lang[31].'</span>';
 	
 elseif($file=='..' )
@@ -570,7 +584,7 @@ else
 function extension($file)
 {
 	global $lang;
-if($file=='Match not found')
+if($file=='Match_not_found')
 	return '--'; 
 $extension=strtolower(pathinfo($file, PATHINFO_EXTENSION ))	;
 if($extension=='') 
@@ -596,7 +610,7 @@ return @filesize_formatted($directory.'/'.$file);
 function action($file)
 {
 global $directory,$page,$show_file_or_dir,$lang,$total_files,$_extensions;
-if($file=='Match not found' )
+if($file=='Match_not_found' )
 	return '--'; 
 if( $file =='..')
 	return '--'; 
@@ -680,7 +694,7 @@ return $html;
 function filesize_formatted($path)
 {
 global $units ;
-	if(is_dir($path) || $path=='./Match not found' ) return '--';//directory 
+	if(is_dir($path) || $path=='./Match_not_found' ) return '--';//directory 
     $size = filesize($path);
     $power = $size > 0 ? floor(log($size, 1024)) : 0;
     return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
@@ -688,7 +702,7 @@ global $units ;
 function fileTime($index,$file)
 { 
 global $times ;
-if($file=='Match not found') return '--';
+if($file=='Match_not_found') return '--';
 return $times[$index];
 };
 
@@ -1356,7 +1370,9 @@ $.fn.extend({
 				dir = replace_dir(dir); 
 				$('#UploadFileDir').val(dir);
 				$('#inputFileUpload').val('');
+				$("#UploadFileSize").html('');	
 				$('#ShowFile').modal('hide');	
+				$("#FileUploadBtn").attr("disabled", "disabled");
 				$('#maxFileSize').html( formatFileSize(maxFileSize) );	
 				$('#FileUploadLabelsuccess').html('');
 				$('#UploadFile').modal('show');				
