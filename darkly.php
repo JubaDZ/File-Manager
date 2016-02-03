@@ -4,7 +4,7 @@ ini_set("display_errors", 1);
 date_default_timezone_set('UTC'); 
 
 $LoginDialog      = true;
-$login_user       = 'admin';
+$login_user       = '';
 $login_pass       = 'admin';
 $charset          = 'utf-8';
 $show_file_or_dir = true ; // can show directory
@@ -346,7 +346,6 @@ if(!Login() && $LoginDialog)
 <meta name="viewport" content="width=device-width, initial-scale=1">
 '.css().'
 <style>
-body {background: #F1F1F1 none repeat scroll 0% 0%;}
 .UserIcon{background:url( '.$icon[12].') no-repeat left center;padding: 5px 0 5px 20px;}
 .PassIcon{background:url( '.$icon[14].') no-repeat left center;padding: 5px 0 5px 20px;}
 </style>
@@ -354,7 +353,7 @@ body {background: #F1F1F1 none repeat scroll 0% 0%;}
 <body>
 <div class="container">
  <div class="col-sm-4 col-sm-offset-4" style="margin-top:50px;">
-		<div class="well" style="background-color: #FFF;">
+		<div class="well" >
       <legend>'.$lang[22].'</legend>
     <form accept-charset="'.$charset.'" action="" method="post">'.$html_input_user.'
 		          
