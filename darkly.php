@@ -488,6 +488,7 @@ function FilterScanDir($directory)
 	global $_extensions;
 $times	= array() ;
 $files_tmp = array() ;	
+$folers_tmp = array() ;	
 $total_files = 0;
 $files = (is_dir($directory)) ? @scandir($directory) : array() ;	
 if (is_array($files) || is_object($files))
@@ -496,13 +497,18 @@ if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==
 {
 	if($file !=='..')
 	$total_files++;
-	$files_tmp[]=$file;
-	$times[] = date ("d/m/Y h:i:s A.", @filemtime($file));
+
+    if(is_dir($file))
+	 $folers_tmp[]=$file;
+    else
+	 $files_tmp[]=$file;
+ 
+	$times[] = date ("d/m/Y H:i:s", @filemtime($file));
 }
 //arsort($files_tmp);
 //$files = array_keys($files_tmp);
 //array_multisort(array_map('filemtime', $files_tmp ), SORT_DESC, $files_tmp);
-return array( 'list' => $files_tmp ,'times' => $times , 'count' => $total_files );
+return array( 'list' => array_merge($folers_tmp,$files_tmp)  ,'times' => $times , 'count' => $total_files );
 }
 
 function listFolderFiles($dir){
