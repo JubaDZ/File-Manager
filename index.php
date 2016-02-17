@@ -485,14 +485,14 @@ function folderSize ($dir)
     return $size;
 }
 
-function FilterScanDir($directory)
+function FilterScanDir($dir)
 {
-	global $_extensions;
+	global $_extensions,$directory;
 $times	= array() ;
 $files_tmp = array() ;	
 $folers_tmp = array() ;	
 $total_files = 0;
-$files = (is_dir($directory)) ? @scandir($directory) : array() ;	
+$files = (is_dir($dir)) ? @scandir($dir) : array() ;	
 if (is_array($files) || is_object($files))
 foreach($files as $file)
 if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==0 ) && $file !=='.'  )	
@@ -505,7 +505,7 @@ if(  ( in_array(extension($file), $_extensions[0] ) || count($_extensions[0]) ==
     else
 	 $files_tmp[]=$file;
  
-	$times[] = date ("d/m/Y H:i:s", @filemtime($file));
+	$times[] = date ("d/m/Y H:i:s", @filemtime($directory.'/'.$file));
 }
 //arsort($files_tmp);
 //$files = array_keys($files_tmp);
