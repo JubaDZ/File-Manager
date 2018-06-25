@@ -287,7 +287,7 @@ $css='';
 if(file_exists('./css/darkly.css'))
     $css.='<link href="./css/darkly.css" rel="stylesheet">';
 else
-	$css.='<link rel="stylesheet" href="//bootswatch.com/darkly/bootstrap.min.css">';
+	$css.='<link rel="stylesheet" href="//bootswatch.com/3/darkly/bootstrap.min.css">';
 
 if(file_exists('./js/jquery-2.2.0.min.js'))
 	$css.='<script src="./js/jquery-2.2.0.min.js"></script>';
