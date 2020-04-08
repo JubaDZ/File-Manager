@@ -470,7 +470,6 @@ if(!function_exists('scandir')) {
            return $files;
        } else {
        return FALSE;
-       break;
        }
    }
 };
